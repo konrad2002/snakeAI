@@ -1,0 +1,24 @@
+{
+	"folders": [
+		{
+			"path": "../BESONDERE LERNLEISTUNG/code/SnakeAI"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+
+			{
+				"name": "main.py",
+				"type": "python",
+				"request": "launch",
+				"program": "main.py",
+				"console": "integratedTerminal"
+			}
+		]
+	}
+}
