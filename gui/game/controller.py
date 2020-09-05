@@ -156,8 +156,6 @@ class GameController (RelativeLayout):
 
 
     def prepare(self):
-        print("[game] preparing...")
-
         # get best score
         self.main.gameApp.cursor.execute(self.bestQuery)
         rows = self.main.gameApp.cursor.fetchall()
@@ -190,6 +188,7 @@ class GameController (RelativeLayout):
         self.update()
 
     def ready(self):
+        print("[" + str(self.instance) + "] ready!")
         self.prepare()
         self.data.ready = True
         self.data.state = 2
@@ -197,7 +196,6 @@ class GameController (RelativeLayout):
         self.main.gameApp.checkReady()
 
     def start(self):
-        print("[game] starting...")
         self.data.running = True
         self.data.ready = False
         self.data.state = 3
@@ -291,6 +289,8 @@ class GameController (RelativeLayout):
                 query = "UPDATE highscores SET highscore = " + str(highscore) + " WHERE playerType = " + str(self.type)
                 self.main.gameApp.cursor.execute(query)
                 self.main.gameApp.db.commit()
+
+            print("[" + str(self.instance) + "] died with score of " + str(highscore))
 
             if not self.ai == None:
                 if self.ai.autoReady:
