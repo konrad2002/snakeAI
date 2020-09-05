@@ -165,7 +165,7 @@ class GameController (RelativeLayout):
 
         # create foods
         self.data.foods.clear()
-        for i in range(768):
+        for _ in range(768):
             x = random.randint(0, 31)
             y = random.randint(0, 23)
 
@@ -175,7 +175,7 @@ class GameController (RelativeLayout):
 
         # create snake(s)
         self.data.snakes.clear()
-        for i in range(self.data.population):
+        for _ in range(self.data.population):
             snake = Snake(self.data.startSize)
             self.data.snakes.append(snake)
 
