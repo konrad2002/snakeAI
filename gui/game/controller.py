@@ -126,7 +126,7 @@ class GameController (RelativeLayout):
         if self.main.settings.playerMode == 2:
             btnX = 0
             btnY = self.sizeY / 15
-
+            
             btnSizeX = self.sizeX
             btnSizeY = self.sizeY - self.sizeY / 15 * 2 - self.mapY - 4
 
