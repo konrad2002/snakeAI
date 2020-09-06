@@ -1,10 +1,10 @@
 # buttons for game with player slot
 
-from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
 from kivy.graphics import Rectangle,Canvas,Ellipse,Color,Line
 
-class PlayerButtons (RelativeLayout):
+class PlayerButtons (FloatLayout):
     def __init__ (self, game, **kwargs):
         super(PlayerButtons, self).__init__(**kwargs)
         print("[game] created " + str(self.__class__))
