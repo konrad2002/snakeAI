@@ -19,9 +19,7 @@ class PlayerButtons (RelativeLayout):
             Color(.1, .2, .7, .5)
             self.bg = Rectangle(pos=(0, 0), size=(self.size[0], self.size[1]))
 
-            self.buttonLayer = BoxLayout(padding = 20, orientation = "vertical")
-            self.buttonLayer.size = (self.size[0], self.size[1] - 40)
-            self.buttonLayer.pos = (0, 0)
+            self.buttonLayer = BoxLayout(padding = 20, orientation = "vertical", size = (self.size[0], self.size[1] - 40), pos = (0, 0))
 
             self.readyBtn = Button(
                 text = "Bereit",
@@ -51,7 +49,6 @@ class PlayerButtons (RelativeLayout):
             self.buttonLayer.add_widget(self.key1Btn)
             self.buttonLayer.add_widget(self.key2Btn)
 
-            self.add_widget(self.buttonLayer)
 
     def onReady(self, a):
         self.game.ready()
