@@ -24,6 +24,8 @@ class Data (object):
         self.generation = 0
         self.population = 1
 
+        self.tempPopulation = 1
+
         # snakes and settings
         self.snakes = []
         self.foods = []

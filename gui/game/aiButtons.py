@@ -5,6 +5,8 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.graphics import Rectangle,Canvas,Ellipse,Color,Line
 
+import random
+
 import math
 
 class AiButtons (RelativeLayout):
@@ -17,7 +19,7 @@ class AiButtons (RelativeLayout):
     def drawBackground(self):
         with self.canvas:
             self.canvas.clear()
-            
+
             self.sizeX = self.size[0]
             self.sizeY = self.size[1]
 
@@ -28,14 +30,34 @@ class AiButtons (RelativeLayout):
 
             self.readyBtn = Button(
                 text = "Bereit",
-                pos = (0 , 0),
-                size_hint = (.1, .1),
+                # pos = (0 , 0),
+                # size_hint = (.1, .1),
                 on_release = self.onReady
             )
 
             self.buttons.append(self.readyBtn)
 
             self.add_widget(self.readyBtn)
+
+
+            self.create100 = Button(
+                text = "100 Snakes",
+                # pos = (0 , 0),
+                # size_hint = (.1, .1),
+                on_release = self.on100snakes
+            )
+            self.randomSnake = Button(
+                text = "showRandom",
+                # pos = (0 , 0),
+                # size_hint = (.1, .1),
+                on_release = self.showRandomSnake
+            )
+
+            self.buttons.append(self.create100)
+            self.buttons.append(self.randomSnake)
+
+            self.add_widget(self.create100)
+            self.add_widget(self.randomSnake)
 
             
             # calculation of button positions and size (depending on number of buttons)
@@ -67,3 +89,9 @@ class AiButtons (RelativeLayout):
     
     def onReady(self, a):
         self.game.ready()
+
+    def on100snakes(self, a):
+        self.game.data.tempPopulation = 100
+
+    def showRandomSnake(self, a):
+        self.game.data.displayedSnake = self.game.data.snakes[random.randint(0, self.game.data.population - 1)]

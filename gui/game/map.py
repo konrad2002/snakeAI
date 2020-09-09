@@ -52,7 +52,7 @@ class GameMap (RelativeLayout):
 
             for i,tile in enumerate(self.game.data.displayedSnake.body):
                 if i > ( len(self.body) - 1 ):
-                    bodyTile = Rectangle(source='images/body.png',pos=(self.pixel * tile.x, self.pixel * tile.y), size=(self.pixel, self.pixel))
+                    bodyTile = Rectangle(source='images/body.png', pos=(self.pixel * tile.x, self.pixel * tile.y), size=(self.pixel, self.pixel))
                     self.body.append(bodyTile)
 
                 self.body[i].pos = (
@@ -155,11 +155,24 @@ class GameMap (RelativeLayout):
 
 
             if self.game.data.displayedSnake.death:
-                Color(0.5,0,0,0.3)
-                self.deadRed = Rectangle(pos=(0, 0), size=(self.sizeX, self.sizeY))
-                self.deathLbl = Label(
-                    text = "Game Over",
-                    pos = (0, 0),
-                    size = (self.sizeX, self.sizeY),
-                    font_size = str(self.sizeX / 10) + "sp"
-                )
+                if self.game.data.population <= 1:
+                    Color(0.5,0,0,0.3)
+                    self.deadRed = Rectangle(pos=(0, 0), size=(self.sizeX, self.sizeY))
+                    self.deathLbl = Label(
+                        text = "Game Over",
+                        pos = (0, 0),
+                        size = (self.sizeX, self.sizeY),
+                        font_size = str(self.sizeX / 10) + "sp"
+                    )
+                else:
+                    if self.game.alive:
+                        self.game.buttons.showRandomSnake(None)
+                    else:
+                        Color(0.5,0,0,0.3)
+                        self.deadRed = Rectangle(pos=(0, 0), size=(self.sizeX, self.sizeY))
+                        self.deathLbl = Label(
+                            text = "Game Over",
+                            pos = (0, 0),
+                            size = (self.sizeX, self.sizeY),
+                            font_size = str(self.sizeX / 10) + "sp"
+                        )

@@ -175,6 +175,8 @@ class GameController (RelativeLayout):
             self.data.foods.append(newFood)
 
         # create snake(s)
+        self.data.population = self.data.tempPopulation
+
         self.data.snakes.clear()
         for _ in range(self.data.population):
             snake = Snake(self.data.startSize)
@@ -194,6 +196,7 @@ class GameController (RelativeLayout):
         self.data.ready = True
         self.data.state = 2
         self.buttons.readyBtn.color = (0,1,0,1)
+        self.alive = True
         self.main.gameApp.checkReady()
 
     def start(self):
@@ -272,7 +275,8 @@ class GameController (RelativeLayout):
                         if snake.body[0].x == tile.x and snake.body[0].y == tile.y:
                             snake.die()
         
-        if not alive:
+        self.alive = alive
+        if not self.alive:
             self.data.running = False
             self.data.state = 4
             self.buttons.readyBtn.color = (1,0.4,0.4,1)
