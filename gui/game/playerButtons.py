@@ -6,6 +6,8 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.graphics import Rectangle,Canvas,Ellipse,Color,Line
 
+import math
+
 class PlayerButtons (RelativeLayout):
     def __init__ (self, game, **kwargs):
         super(PlayerButtons, self).__init__(**kwargs)
@@ -18,7 +20,9 @@ class PlayerButtons (RelativeLayout):
             self.canvas.clear()
 
             Color(.1, .2, .7, .5)
-            self.bg = Rectangle(pos=(0, 0), size=(self.size[0], self.size[1]))
+            self.sizeX = self.size[0]
+            self.sizeY = self.size[1]
+            self.bg = Rectangle(pos=(0, 0), size=(self.sizeX, self.sizeY))
 
             self.buttons = []
 
@@ -30,6 +34,7 @@ class PlayerButtons (RelativeLayout):
             )
 
             self.buttons.append(self.readyBtn)
+            self.add_widget(self.readyBtn)
 
 
 
@@ -51,18 +56,36 @@ class PlayerButtons (RelativeLayout):
             self.buttons.append(self.key1Btn)
             self.buttons.append(self.key2Btn)
 
+            self.add_widget(self.key1Btn)
+            self.add_widget(self.key2Btn)
+
+
+
+            # calculation of button positions and size (depending on number of buttons)
+            self.sqrt = math.sqrt(len(self.buttons))
+            self.cols = round(self.sqrt + 0.4999)
 
             for i,button in enumerate(self.buttons):
-                button.size = (
-                    self.size[0] / 3,
-                    self.size[1] / 3
-                )
+                if self.game.main.settings.playerMode != 2:
+                    button.size_hint = (
+                        0.1,
+                        ( 1 / self.cols - ( 0.15 / self.cols ) )
+                    )
+                else:
+                    button.size_hint = (
+                        1 / self.cols,
+                        0.1
+                    )
+
+                row = round( ( i / self.cols ) + 0.4999 )
+                col = i % self.cols
 
                 button.pos = (
-                    
+                    col * self.sizeX / self.cols,
+                    row * self.sizeY / self.cols,
                 )
 
-
+                print("Button " + str(i) + ": " + str(col) + " | " + str(row))
 
     def onReady(self, a):
         self.game.ready()
