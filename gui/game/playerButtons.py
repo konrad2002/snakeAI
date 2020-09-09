@@ -1,6 +1,7 @@
 # buttons for game with player slot
 
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.graphics import Rectangle,Canvas,Ellipse,Color,Line
@@ -19,7 +20,7 @@ class PlayerButtons (RelativeLayout):
             Color(.1, .2, .7, .5)
             self.bg = Rectangle(pos=(0, 0), size=(self.size[0], self.size[1]))
 
-            self.buttonLayer = BoxLayout(padding = 20, orientation = "vertical", size = (self.size[0], self.size[1] - 40), pos = (0, 0))
+            self.buttons = []
 
             self.readyBtn = Button(
                 text = "Bereit",
@@ -28,7 +29,8 @@ class PlayerButtons (RelativeLayout):
                 on_release = self.onReady
             )
 
-            self.buttonLayer.add_widget(self.readyBtn)
+            self.buttons.append(self.readyBtn)
+
 
 
             self.key1Btn = Button(
@@ -46,14 +48,26 @@ class PlayerButtons (RelativeLayout):
                 on_release = self.onSetKeyboard
             )
 
-            self.buttonLayer.add_widget(self.key1Btn)
-            self.buttonLayer.add_widget(self.key2Btn)
+            self.buttons.append(self.key1Btn)
+            self.buttons.append(self.key2Btn)
+
+
+            for i,button in enumerate(self.buttons):
+                button.size = (
+                    self.size[0] / 3,
+                    self.size[1] / 3
+                )
+
+                button.pos = (
+                    
+                )
+
 
 
     def onReady(self, a):
         self.game.ready()
 
     def onSetKeyboard(self, a):
-        print("set keyboard for " + str(self.game.instance) + " to " + str(a.id))
+        print("[KEYS] set keyboard for " + str(self.game.instance) + " to " + str(a.id))
         a.color = (0,1,0,1)
         self.game.setKeyboard(int(a.id))

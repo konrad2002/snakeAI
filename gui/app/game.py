@@ -3,6 +3,8 @@
 from gui.nav import GuiNav
 from gui.game.controller import GameController
 
+from kivy.uix.floatlayout import FloatLayout
+
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.uix.button import Button

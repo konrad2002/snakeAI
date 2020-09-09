@@ -17,6 +17,7 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.graphics import Rectangle,Canvas,Ellipse,Color,Line
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.floatlayout import FloatLayout
 
 import random
 
