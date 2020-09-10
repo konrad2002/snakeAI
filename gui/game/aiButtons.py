@@ -2,6 +2,7 @@
 
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.button import Button
+from kivy.uix.textinput import TextInput
 from kivy.uix.label import Label
 from kivy.graphics import Rectangle,Canvas,Ellipse,Color,Line
 
@@ -40,6 +41,13 @@ class AiButtons (RelativeLayout):
             self.add_widget(self.readyBtn)
 
 
+            self.populationInput = TextInput(
+                text = "Population",
+                # pos = (0 , 0),
+                # size_hint = (.1, .1),
+                on_text_validate = self.onChangePopulation,
+                multiline = False
+            )
             self.create100 = Button(
                 text = "100 Snakes",
                 # pos = (0 , 0),
@@ -53,9 +61,11 @@ class AiButtons (RelativeLayout):
                 on_release = self.onShowRandomSnake
             )
 
+            self.buttons.append(self.populationInput)
             self.buttons.append(self.create100)
             self.buttons.append(self.randomSnake)
 
+            self.add_widget(self.populationInput)
             self.add_widget(self.create100)
             self.add_widget(self.randomSnake)
 
@@ -95,3 +105,6 @@ class AiButtons (RelativeLayout):
 
     def onShowRandomSnake(self, a):
         self.game.showSnake(mode = "random")
+
+    def onChangePopulation(self, instance):
+        self.game.data.tempPopulation = int(instance.text)
