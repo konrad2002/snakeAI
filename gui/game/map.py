@@ -166,7 +166,7 @@ class GameMap (RelativeLayout):
                     )
                 else:
                     if self.game.alive:
-                        self.game.buttons.showRandomSnake(None)
+                        self.game.showSnake()
                     else:
                         Color(0.5,0,0,0.3)
                         self.deadRed = Rectangle(pos=(0, 0), size=(self.sizeX, self.sizeY))

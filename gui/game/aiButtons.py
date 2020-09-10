@@ -50,7 +50,7 @@ class AiButtons (RelativeLayout):
                 text = "showRandom",
                 # pos = (0 , 0),
                 # size_hint = (.1, .1),
-                on_release = self.showRandomSnake
+                on_release = self.onShowRandomSnake
             )
 
             self.buttons.append(self.create100)
@@ -93,5 +93,5 @@ class AiButtons (RelativeLayout):
     def on100snakes(self, a):
         self.game.data.tempPopulation = 100
 
-    def showRandomSnake(self, a):
-        self.game.data.displayedSnake = self.game.data.snakes[random.randint(0, self.game.data.population - 1)]
+    def onShowRandomSnake(self, a):
+        self.game.showSnake(mode = "random")

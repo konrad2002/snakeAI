@@ -300,3 +300,22 @@ class GameController (RelativeLayout):
             if not self.ai == None:
                 if self.ai.autoReady:
                     self.ready()
+
+    def showSnake(self, mode = ""):
+        newSnake = 0
+
+        if mode == "":
+            for i,snake in enumerate(self.data.snakes):
+                if not snake.death:
+                    newSnake = i
+                    break
+        
+        elif mode == "random":
+            alive = []
+            for i,snake in enumerate(self.data.snakes):
+                if not snake.death:
+                    alive.append(i)
+
+            newSnake = random.choice(alive)
+
+        self.data.displayedSnake = self.data.snakes[newSnake]
