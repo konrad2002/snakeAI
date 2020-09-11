@@ -36,6 +36,16 @@ class PlayerButtons (RelativeLayout):
             self.buttons.append(self.readyBtn)
             self.add_widget(self.readyBtn)
 
+            self.readyBtn2 = Button(
+                text = "Bereit",
+                # pos = (0 , 0),
+                # size_hint = (.1, .1),
+                on_release = self.onReady
+            )
+
+            self.buttons.append(self.readyBtn2)
+            self.add_widget(self.readyBtn2)
+
 
 
             self.key1Btn = Button(

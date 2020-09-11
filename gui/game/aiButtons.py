@@ -83,7 +83,7 @@ class AiButtons (RelativeLayout):
                 else:
                     button.size_hint = (
                         1 / self.cols,
-                        0.1
+                        0.06
                     )
 
                 row = round( ( i / self.cols ) + 0.4999 )
