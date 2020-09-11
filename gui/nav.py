@@ -73,7 +73,7 @@ class GuiNav (Widget):
 
         elif keycode[1] == 'q':
             self.setReady(1)
-        elif keycode[1] == '-':
+        elif keycode[1] == 'numpad0':
             self.setReady(2)
 
         elif keycode[1] == 'spacebar':
