@@ -86,7 +86,7 @@ class AiButtons (RelativeLayout):
                         0.06
                     )
 
-                row = round( ( i / self.cols ) + 0.4999 )
+                row = round( ( i / self.cols ) + 0.500001 ) - 1
                 col = i % self.cols
 
                 button.pos = (

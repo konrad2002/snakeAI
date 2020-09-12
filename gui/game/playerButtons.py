@@ -87,12 +87,12 @@ class PlayerButtons (RelativeLayout):
                         0.06
                     )
 
-                row = round( ( i / self.cols ) + 0.4999 )
+                row = round( ( i / self.cols ) + 0.50001 ) - 1
                 col = i % self.cols
 
                 button.pos = (
-                    col * self.sizeX / self.cols,
-                    row * self.sizeY / self.cols,
+                    col * self.sizeX / self.cols, # x
+                    row * self.sizeY / self.cols  #y
                 )
 
                 print("Button " + str(i) + ": " + str(col) + " | " + str(row))
