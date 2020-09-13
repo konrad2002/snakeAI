@@ -51,7 +51,7 @@ class InfoBar (RelativeLayout):
             )
 
             self.lbl6 = Label(
-                text = "Kopf: ",
+                text = "Alive: ",
                 center = (6 * self.margin, self.size[1] / 2),
                 bold = True
             )

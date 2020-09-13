@@ -26,6 +26,8 @@ class Data (object):
 
         self.tempPopulation = 1
 
+        self.dead = 0
+
         # snakes and settings
         self.snakes = []
         self.foods = []

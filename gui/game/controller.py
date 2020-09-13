@@ -185,6 +185,7 @@ class GameController (RelativeLayout):
         self.data.displayedSnake = self.data.snakes[0]
 
         self.data.state = 1
+        self.data.dead = 0
 
         self.map.prepare()
 
@@ -213,7 +214,7 @@ class GameController (RelativeLayout):
         self.infoBar.lbl3.text = "Highscore: " + str(self.data.highscore)
         if (self.data.state >= 1):
             self.infoBar.lbl4.text = "Länge: " + str(len(self.data.displayedSnake.body))
-            self.infoBar.lbl6.text = "Kopf: ( " + str(self.data.displayedSnake.body[0].x) + " | " + str(self.data.displayedSnake.body[0].y) + " )"
+            self.infoBar.lbl6.text = "Alive: " + str(self.data.population - self.data.dead) + " / " + str(self.data.population)
         
         if self.type <= 2 or self.type >= 5:
             txt = "Runde"
@@ -228,6 +229,7 @@ class GameController (RelativeLayout):
     def move(self):
 
         alive = False
+        dead = 0
         for snake in self.data.snakes:
             if snake.death == False:
 
@@ -274,8 +276,11 @@ class GameController (RelativeLayout):
                     if i > 0:
                         if snake.body[0].x == tile.x and snake.body[0].y == tile.y:
                             snake.die()
-        
+            else:
+                dead += 1
         self.alive = alive
+        self.data.dead = dead
+
         if not self.alive:
             self.data.running = False
             self.data.state = 4
