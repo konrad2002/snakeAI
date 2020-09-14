@@ -192,7 +192,7 @@ class GameController (RelativeLayout):
         self.update()
 
     def ready(self):
-        print("[" + str(self.instance) + "] ready!")
+        print("[" + str(self.instance) + "] ready")
         self.prepare()
         self.data.ready = True
         self.data.state = 2
