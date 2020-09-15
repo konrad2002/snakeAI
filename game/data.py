@@ -35,3 +35,6 @@ class Data (object):
         self.displayedSnake = None
 
         self.startSize = 3
+
+        self.aiSensor = []
+        self.sensorType = 0

@@ -21,6 +21,9 @@ class Snake (object):
 
         self.hasEaten = False
 
+        self.ai = None
+        self.aiSensor = None
+
     def eat(self):
         newTile = GameTile(
             self.body[len(self.body) - 1].x,

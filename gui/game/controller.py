@@ -1,10 +1,12 @@
 # main game controller, used 1 - 2 times
 
 from ai.rand import RandomDirection
+from ai.algorithm import AlgorithmDirection
 
 from game.data import Data
 from game.tile import GameTile
 from game.snake import Snake
+from game.aiSensor import AiSensor
 
 from gui.game.map import GameMap
 from gui.game.infobar import InfoBar
@@ -68,12 +70,6 @@ class GameController (RelativeLayout):
 
         self.pos = (self.x, self.y)
         self.size = (self.sizeX, self.sizeY)
-
-        if self.type >= 3:
-            if self.type == 5:
-                self.ai = RandomDirection()
-        else:
-            self.ai = None
 
         self.drawBorder()
         self.showMap()
@@ -180,6 +176,17 @@ class GameController (RelativeLayout):
         self.data.snakes.clear()
         for _ in range(self.data.population):
             snake = Snake(self.data.startSize)
+            
+            if self.type == 5:
+                snake.ai = RandomDirection()
+            elif self.type == 6:
+                snake.ai = AlgorithmDirection()
+
+            if self.type % 2 == 1:
+                snake.aiSensor = AiSensor(snake, 1)
+            else:
+                snake.aiSensor = AiSensor(snake, 2)
+
             self.data.snakes.append(snake)
 
         self.data.displayedSnake = self.data.snakes[0]
@@ -233,8 +240,8 @@ class GameController (RelativeLayout):
         for snake in self.data.snakes:
             if snake.death == False:
 
-                if not self.ai == None:
-                    snake.newDirection = self.ai.direction()
+                if not snake.ai == None:
+                    snake.newDirection = snake.ai.direction()
 
                 alive = True
                 lastTile = snake.body[len(snake.body) - 1]
@@ -281,6 +288,7 @@ class GameController (RelativeLayout):
         self.alive = alive
         self.data.dead = dead
 
+
         if not self.alive:
             self.data.running = False
             self.data.state = 4
@@ -302,9 +310,8 @@ class GameController (RelativeLayout):
 
             print("[" + str(self.instance) + "] died with score of " + str(highscore))
 
-            if not self.ai == None:
-                if self.ai.autoReady:
-                    self.ready()
+            if self.type > 2:
+                self.ready()
 
     def showSnake(self, mode = ""):
         newSnake = 0
