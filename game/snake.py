@@ -3,10 +3,11 @@
 from game.tile import GameTile
 
 class Snake (object):
-    def __init__ (self, startSize):
+    def __init__ (self, startSize, foods):
 
         self.body = []
-        
+        self.foods = foods
+
         for i in range(startSize):
             tile = GameTile(
                 8 - i,

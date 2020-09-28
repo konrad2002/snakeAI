@@ -175,7 +175,7 @@ class GameController (RelativeLayout):
 
         self.data.snakes.clear()
         for _ in range(self.data.population):
-            snake = Snake(self.data.startSize)
+            snake = Snake(self.data.startSize, self.data.foods)
             
             if self.type == 5:
                 snake.ai = RandomDirection()

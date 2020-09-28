@@ -27,9 +27,33 @@ class AiSensor (object):
     def update(self):
         if self.sensorType == 1:
 
+            # set wall distance
             self.data[0][0] = 24 - self.snake.body[0].y
             self.data[0][1] = 32 - self.snake.body[0].x
             self.data[0][2] = self.snake.body[0].y
             self.data[0][3] = self.snake.body[0].x
+
+
+            # set food distance (if no food in row/col = 0), (only saved, if head in same row/col like food)
+            self.data[1][0] = 0
+            self.data[1][1] = 0
+            self.data[1][2] = 0
+            self.data[1][3] = 0
+
+            diffX = self.data.foods[len(snake.body)].y - self.snake.body[0].y
+            diffY = self.data.foods[len(snake.body)].x - self.snake.body[0].x
+
+            if diffX == 0
+                if diffY > 0:
+                    self.data[1][0] = diffY
+                elif diffY < 0:
+                    self.data[1][2] = diffY * ( -1 )
+
+            elif diffY == 0:
+                if diffX > 0:
+                    self.data[1][1] = diffX
+                elif diffX < 0:
+                    self.data[1][3] = diffX * ( -1 )
+                
 
             print(self.data[0])
