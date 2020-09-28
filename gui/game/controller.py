@@ -182,7 +182,7 @@ class GameController (RelativeLayout):
             elif self.type == 6:
                 snake.ai = AlgorithmDirection()
 
-            if self.type % 2 == 1:
+            if self.type % 2 == 0:
                 snake.aiSensor = AiSensor(snake, 1)
             else:
                 snake.aiSensor = AiSensor(snake, 2)
@@ -283,6 +283,12 @@ class GameController (RelativeLayout):
                     if i > 0:
                         if snake.body[0].x == tile.x and snake.body[0].y == tile.y:
                             snake.die()
+
+
+                if snake.death == False:
+
+                    snake.aiSensor.update()
+
             else:
                 dead += 1
         self.alive = alive
