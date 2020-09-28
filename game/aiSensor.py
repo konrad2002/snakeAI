@@ -40,10 +40,10 @@ class AiSensor (object):
             self.data[1][2] = 0
             self.data[1][3] = 0
 
-            diffX = self.data.foods[len(snake.body)].y - self.snake.body[0].y
-            diffY = self.data.foods[len(snake.body)].x - self.snake.body[0].x
+            diffX = self.snake.foods[len(self.snake.body)].y - self.snake.body[0].y
+            diffY = self.snake.foods[len(self.snake.body)].x - self.snake.body[0].x
 
-            if diffX == 0
+            if diffX == 0:
                 if diffY > 0:
                     self.data[1][0] = diffY
                 elif diffY < 0:
@@ -56,4 +56,8 @@ class AiSensor (object):
                     self.data[1][3] = diffX * ( -1 )
                 
 
-            print(self.data[0])
+            # set distance to own body (closest, nothing = 0)
+
+
+
+            print(self.data[1])
