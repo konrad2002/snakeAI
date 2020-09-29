@@ -57,10 +57,10 @@ class AiSensor (object):
                 
 
             # set distance to own body (closest, nothing = 0)
-            self.data[2][0] = 0
-            self.data[2][1] = 0
-            self.data[2][2] = 0
-            self.data[2][3] = 0
+            self.data[2][0] = 50
+            self.data[2][1] = 50
+            self.data[2][2] = 50
+            self.data[2][3] = 50
 
             for i,tile in enumerate(self.snake.body):
                 diffX = 0
