@@ -57,7 +57,31 @@ class AiSensor (object):
                 
 
             # set distance to own body (closest, nothing = 0)
+            self.data[2][0] = 0
+            self.data[2][1] = 0
+            self.data[2][2] = 0
+            self.data[2][3] = 0
+
+            for i,tile in enumerate(self.snake.body):
+                diffX = 0
+                diffY = 0
+                if i > 0:
+
+                    if tile.x == self.snake.body[0].x:
+                        diffY = tile.y - self.snake.body[0].y
+
+                        if self.data[2][0] > diffY and diffY > 0:
+                            self.data[2][0] = diffY
+                        if self.data[2][2] > diffY * ( -1 ) and diffY < 0:
+                            self.data[2][2] = diffY * ( -1 )
+
+                    if tile.y == self.snake.body[0].y:
+                        diffX = tile.x - self.snake.body[0].x
+
+                        if self.data[2][1] > diffX and diffX > 0:
+                            self.data[2][1] = diffX
+                        if self.data[2][3] > diffX * ( -1 ) and diffX < 0:
+                            self.data[2][3] = diffX * ( -1 )
 
 
-
-            print(self.data[1])
+            print(self.data[2])
