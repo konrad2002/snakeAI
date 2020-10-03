@@ -8,7 +8,9 @@ class Snake (object):
         self.body = []
         self.foods = foods
 
-        for i in range(startSize):
+        self.startSize = startSize
+
+        for i in range(self.startSize):
             tile = GameTile(
                 8 - i,
                 8

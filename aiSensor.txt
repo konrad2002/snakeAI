@@ -27,6 +27,8 @@ TYPE 2:
     food:
         x
         y
+
+    length
     
     history:
         0:

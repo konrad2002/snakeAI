@@ -18,13 +18,13 @@ class AiSensor (object):
         elif self.sensorType == 2:
             self.data.append([1, 1]) # head (x, y)
             self.data.append([1, 1]) # food (x, y)
+            self.data.append(self.snake.startSize) # length = init
             self.data.append([])     # history
-            
-            for _ in range(768):
-                self.data[2].append([1, 1]) # for each step koords of head
                 
 
     def update(self):
+
+        # snake head view
         if self.sensorType == 1:
 
             # set wall distance
@@ -57,10 +57,10 @@ class AiSensor (object):
                 
 
             # set distance to own body (closest, nothing = 0)
-            self.data[2][0] = 50
-            self.data[2][1] = 50
-            self.data[2][2] = 50
-            self.data[2][3] = 50
+            self.data[2][0] = 100
+            self.data[2][1] = 100
+            self.data[2][2] = 100
+            self.data[2][3] = 100
 
             for i,tile in enumerate(self.snake.body):
                 diffX = 0
@@ -83,5 +83,26 @@ class AiSensor (object):
                         if self.data[2][3] > diffX * ( -1 ) and diffX < 0:
                             self.data[2][3] = diffX * ( -1 )
 
+            for i,value in enumerate(self.data[2]):
+                if value == 100:
+                    self.data[2][i] = 0
 
-            print(self.data[2])
+
+        elif self.sensorType == 2:
+
+            # coords head
+            self.data[0][0] = self.snake.body[0].x
+            self.data[0][1] = self.snake.body[0].y
+
+            # coords food
+            self.data[1][0] = self.snake.foods[len(self.snake.body)].x
+            self.data[1][1] = self.snake.foods[len(self.snake.body)].y
+
+            # snake length
+            self.data[2] = len(self.snake.body)
+
+            # body history (step one forward => set new head)
+            self.data[3].insert(0, [
+                self.snake.body[0].x,
+                self.snake.body[0].y
+            ])
