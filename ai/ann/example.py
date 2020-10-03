@@ -3,12 +3,10 @@
 import numpy as np
 
 class AiAnnExample (object):
-    def __init__ (self, nInputNeurons = 1, nHiddenNeurons = (1, 1), nOutputNeurons = 1, activationF = "heaviside", outputF = "id"):
+    def __init__ (self, nNeurons = [1, 1, 1], weights = None, activationF = "heaviside", outputF = "id"):
         print("[ai  ] created " + str(self.__class__))
 
-        self.nInputNeurons = nInputNeurons
-        self.nHiddenNeurons = nHiddenNeurons
-        self.nOutputNeurons = nOutputNeurons
+        self.nNeurons = nNeurons
 
         self.activationF = activationF
         self.outputF = outputF
@@ -16,16 +14,22 @@ class AiAnnExample (object):
 
         self.network = []
 
-        self.inputNeurons = np.zeros(self.nInputNeurons)
-        self.hiddenNeurons = np.zeros(self.nHiddenNeurons)
-        self.outputNeurons = np.zeros(self.nOutputNeurons)
+        for layer,neurons in enumerate(self.nNeurons):
+
+            # init neurons of layer with 0
+            self.network.append(
+                np.zeros((neurons, 5))
+            )
 
 
-        self.network.append(self.inputNeurons)
-        self.network.append(self.hiddenNeurons)
-        self.network.append(self.outputNeurons)
-
-
+            if weights:
+                self.network.append(weights[layer])
+            else:
+                # init weights between layer and next layer with 0
+                if layer < ( len(self.nNeurons) - 1 ):
+                    self.network.append(
+                        np.zeros((self.nNeurons[layer + 1], neurons))
+                    )
 
     def function(self, fType, x):
 
@@ -70,3 +74,12 @@ class AiAnnExample (object):
         newDirection = output.index(max(output))
 
         return newDirection
+
+
+    def printNetwork(self):
+        print(self.network)
+
+
+
+ai = AiAnnExample([2, 2, 1])
+ai.printNetwork()
