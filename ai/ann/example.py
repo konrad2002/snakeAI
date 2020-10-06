@@ -84,9 +84,15 @@ class AiAnnExample (object):
         return output
 
 
-    def direction(self):
+    def direction(self, sensorData):
 
-        x = [3, 12]
+        x = []
+
+        for data in sensorData:
+            for subdata in data:
+                x.append(subdata)
+
+        print(x)
 
         output = self.predict(x)
         newDirection = output.index(max(output))
@@ -126,10 +132,10 @@ class AiAnnExample (object):
 
 
 
-ai = AiAnnExample([2, 2, 4], None, "sigmoid")
+ai = AiAnnExample([12, 8, 4], None, "sigmoid")
 ai.printNetwork()
 
-x = [3, 12]
+x = [3,12,1,4,7,3,6,3,6,5,4,18]
 output = ai.predict(x)
 
 print("")
