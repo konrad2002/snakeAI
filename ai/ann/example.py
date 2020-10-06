@@ -13,21 +13,23 @@ class AiAnnExample (object):
 
 
         self.network = []
+        self.layers = []
+        self.weights = []
 
         for layer,neurons in enumerate(self.nNeurons):
 
             # init neurons of layer with 0
-            self.network.append(
+            self.layers.append(
                 np.zeros((neurons, 5))
             )
 
 
             if weights:
-                self.network.append(weights[layer])
+                self.weights.append(weights[layer])
             else:
                 # init weights between layer and next layer with 0
                 if layer < ( len(self.nNeurons) - 1 ):
-                    self.network.append(
+                    self.weights.append(
                         np.zeros((self.nNeurons[layer + 1], neurons))
                     )
 
@@ -61,14 +63,24 @@ class AiAnnExample (object):
 
     def predict(self, x):
 
-        output = [0, 0, 1, 0]
+        self.layers[0][:,2] = x
+
+        for i,layer in enumerate(self.layers):
+            if i > 0:
+                layer[i][:,0] = np.dot(self.layers[i - 1][:,2], self.weights[i - 1])
+
+                layer[i][:,1] = self.function(self.activationF, layer[i][:,0])
+
+                layer[i][:,2] = self.function(self.outputF, layer[i][:,1])
+            
+        output = layer[len(self.nNeurons) - 1][:,2]
 
         return output
 
 
     def direction(self):
 
-        x = [0]
+        x = [0, 1]
 
         output = self.predict(x)
         newDirection = output.index(max(output))
@@ -77,9 +89,15 @@ class AiAnnExample (object):
 
 
     def printNetwork(self):
-        print(self.network)
+
+
+        print(self.layers)
+        print(self.weights)
 
 
 
-ai = AiAnnExample([2, 2, 1])
+ai = AiAnnExample([2, 2, 4])
 ai.printNetwork()
+
+x = [0, 1]
+ai.predict(x)
