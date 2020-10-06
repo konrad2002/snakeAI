@@ -1,6 +1,7 @@
 # example code for a neural network
 
 import numpy as np
+from sklearn.utils.validation import check_random_state
 
 class AiAnnExample (object):
     def __init__ (self, nNeurons = [1, 1, 1], weights = None, activationF = "heaviside", outputF = "id"):
@@ -10,6 +11,9 @@ class AiAnnExample (object):
 
         self.activationF = activationF
         self.outputF = outputF
+
+
+        self.random_state_ = check_random_state(41)
 
 
         self.network = []
@@ -30,23 +34,24 @@ class AiAnnExample (object):
                 # init weights between layer and next layer with 0
                 if layer < ( len(self.nNeurons) - 1 ):
                     self.weights.append(
-                        np.zeros((self.nNeurons[layer + 1], neurons))
+                        self.random_state_.random_sample((neurons, self.nNeurons[layer + 1]))
                     )
 
     def function(self, fType, x):
 
         # used for activation functions and output functions
 
-        y = 0
+        y = []
 
         if not fType:
             fType = "heaviside"
 
         if fType == "heaviside":
-            if x > 0:
-                y = 1
-            else:
-                y = 0
+            for X in x:
+                if X > 0:
+                    y.append(1)
+                else:
+                    y.append(0)
 
         elif fType == "sigmoid":
             y = 1 / ( 1 + np.exp(-x) )
@@ -67,20 +72,21 @@ class AiAnnExample (object):
 
         for i,layer in enumerate(self.layers):
             if i > 0:
-                layer[i][:,0] = np.dot(self.layers[i - 1][:,2], self.weights[i - 1])
+                print(i)
+                layer[:,0] = np.dot(self.layers[i - 1][:,2], self.weights[i - 1])
 
-                layer[i][:,1] = self.function(self.activationF, layer[i][:,0])
+                layer[:,1] = self.function(self.activationF, layer[:,0])
 
-                layer[i][:,2] = self.function(self.outputF, layer[i][:,1])
+                layer[:,2] = self.function(self.outputF, layer[:,1])
             
-        output = layer[len(self.nNeurons) - 1][:,2]
+        output = self.layers[len(self.nNeurons) - 1][:,2]
 
         return output
 
 
     def direction(self):
 
-        x = [0, 1]
+        x = [3, 12]
 
         output = self.predict(x)
         newDirection = output.index(max(output))
@@ -103,7 +109,7 @@ class AiAnnExample (object):
 
             row = ""
             ro2 = ""
-            for j in range(self.nNeurons[i]):
+            for _ in range(self.nNeurons[i]):
                 row += " O "
                 ro2 += " | "
 
@@ -120,8 +126,17 @@ class AiAnnExample (object):
 
 
 
-ai = AiAnnExample([2, 2, 4])
+ai = AiAnnExample([2, 2, 4], None, "sigmoid")
 ai.printNetwork()
 
-x = [0, 1]
-#ai.predict(x)
+x = [3, 12]
+output = ai.predict(x)
+
+print("")
+print("")
+print("output:")
+print(output)
+print("")
+print("")
+
+ai.printNetwork()
