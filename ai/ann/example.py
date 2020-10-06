@@ -72,7 +72,6 @@ class AiAnnExample (object):
 
         for i,layer in enumerate(self.layers):
             if i > 0:
-                print(i)
                 layer[:,0] = np.dot(self.layers[i - 1][:,2], self.weights[i - 1])
 
                 layer[:,1] = self.function(self.activationF, layer[:,0])
@@ -94,6 +93,8 @@ class AiAnnExample (object):
 
         output = self.predict(x)
 
+        print("output: " + str(output))
+
         maximum = 0
         newDirection = 0
         for i,a in enumerate(output):
@@ -101,6 +102,7 @@ class AiAnnExample (object):
                 maximum = a
                 newDirection = i
 
+        print("direct: " + str(newDirection))
         return newDirection
 
 
