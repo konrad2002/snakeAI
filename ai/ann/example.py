@@ -90,9 +90,33 @@ class AiAnnExample (object):
 
     def printNetwork(self):
 
+        for i,layer in enumerate(self.layers):
+            print("[Layer  " + str(i) + "]: ")
+            print(layer)
 
-        print(self.layers)
-        print(self.weights)
+            if i < ( len(self.weights) ):
+                print("[Weight " + str(i) + "]: ")
+                print(self.weights[i])
+
+
+        for i,layer in enumerate(self.layers):
+
+            row = ""
+            ro2 = ""
+            for j in range(self.nNeurons[i]):
+                row += " O "
+                ro2 += " | "
+
+            print("")
+            if i > 0:
+                print(ro2)
+            print(row)
+            if i < ( len(self.weights) ):
+                print(ro2)
+            print("")
+
+            if i < ( len(self.weights) ):
+                print(" " + str(self.nNeurons[i]) + "x" + str(self.nNeurons[i + 1]) + " weights")
 
 
 
@@ -100,4 +124,4 @@ ai = AiAnnExample([2, 2, 4])
 ai.printNetwork()
 
 x = [0, 1]
-ai.predict(x)
+#ai.predict(x)
