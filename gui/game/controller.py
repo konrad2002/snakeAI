@@ -2,6 +2,7 @@
 
 from ai.rand import RandomDirection
 from ai.algorithm import AlgorithmDirection
+from ai.ann.example import AiAnnExample
 
 from game.data import Data
 from game.tile import GameTile
@@ -70,6 +71,14 @@ class GameController (RelativeLayout):
 
         self.pos = (self.x, self.y)
         self.size = (self.sizeX, self.sizeY)
+
+
+        # set ann
+        if self.type == 3 or self.type == 4:
+            self.ai = AiAnnExample([12, 8, 4], None, "sigmoid", "id")
+        else:
+            self.ai = None
+
 
         self.drawBorder()
         self.showMap()
@@ -152,6 +161,7 @@ class GameController (RelativeLayout):
         self.data.keyboardType = keyboardType
 
 
+    # called every time the game restarts
     def prepare(self):
         # get best score
         self.main.gameApp.cursor.execute(self.bestQuery)
@@ -242,6 +252,8 @@ class GameController (RelativeLayout):
 
                 if not snake.ai == None:
                     snake.newDirection = snake.ai.direction()
+                elif self.ai:
+                    snake.newDirection = self.ai.direction(snake.aiSensor.data)
 
                 alive = True
                 lastTile = snake.body[len(snake.body) - 1]

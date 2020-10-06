@@ -92,10 +92,14 @@ class AiAnnExample (object):
             for subdata in data:
                 x.append(subdata)
 
-        print(x)
-
         output = self.predict(x)
-        newDirection = output.index(max(output))
+
+        maximum = 0
+        newDirection = 0
+        for i,a in enumerate(output):
+            if a > maximum:
+                maximum = a
+                newDirection = i
 
         return newDirection
 
