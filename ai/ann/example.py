@@ -99,18 +99,19 @@ class AiAnnExample (object):
             
         output = self.layers[len(self.nNeurons) - 1][:,2]
 
-        print(str(x) + " => " + str(output))
-
         return output
 
 
     def direction(self, sensorData):
 
         x = []
+        print("data  : " + str(sensorData))
 
         for data in sensorData:
             for subdata in data:
                 x.append(subdata)
+
+        print("input : " + str(x))
 
         output = self.predict(x)
 
@@ -124,6 +125,7 @@ class AiAnnExample (object):
                 newDirection = i
 
         print("direct: " + str(newDirection))
+        print("")
         return newDirection
 
 

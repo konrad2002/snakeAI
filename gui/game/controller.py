@@ -75,7 +75,7 @@ class GameController (RelativeLayout):
 
         # set ann
         if self.type == 3 or self.type == 4:
-            self.ai = AiAnnExample([12, 8, 4], None, "sigmoid", "id")
+            self.ai = AiAnnExample([12, 8, 4], None, ["sigmoid", "sigmoid"], ["id", "id"])
         else:
             self.ai = None
 
