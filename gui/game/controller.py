@@ -3,6 +3,7 @@
 from ai.rand import RandomDirection
 from ai.algorithm import AlgorithmDirection
 from ai.ann.example import AiAnnExample
+from ai.vis import AiVisualisation
 
 from game.data import Data
 from game.tile import GameTile
@@ -339,7 +340,7 @@ class GameController (RelativeLayout):
                 if not snake.death:
                     newSnake = i
                     break
-        
+
         elif mode == "random":
             alive = []
             for i,snake in enumerate(self.data.snakes):
@@ -349,3 +350,10 @@ class GameController (RelativeLayout):
             newSnake = random.choice(alive)
 
         self.data.displayedSnake = self.data.snakes[newSnake]
+
+
+    def showAiVis(self):
+
+        self.aiVis = AiVisualisation(self.main.settings.screenX, self.main.settings.screenY, self.ai)
+
+        self.add_widget(self.aiVis)

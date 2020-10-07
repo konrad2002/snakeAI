@@ -164,31 +164,31 @@ class AiAnnExample (object):
                 print(" " + str(self.nNeurons[i]) + "x" + str(self.nNeurons[i + 1]) + " weights")
 
 
-# weights = []
+weights = []
 
-# weights.append(
-#     np.matrix(
-#         [
-#             [0,-2],
-#             [0,1],
-#             [0,1]
-#         ]
-#     )
-# )
+weights.append(
+    np.matrix(
+        [
+            [0,-2],
+            [0,1],
+            [0,1]
+        ]
+    )
+)
 
 
-# ai = AiAnnExample([2, 1], weights=weights, activationF=["heaviside","heaviside"], outputF=["id", "id"])
-# ai.printNetwork()
+ai = AiAnnExample([2, 1], weights=weights, activationF=["heaviside","heaviside"], outputF=["id", "id"])
+ai.printNetwork()
 
-# X = [[0, 0], [0, 1], [1, 0], [1, 1]]
-# for x in X:
-#     output = ai.predict(x)
+X = [[0, 0], [0, 1], [1, 0], [1, 1]]
+for x in X:
+    output = ai.predict(x)
 
-# print("")
-# print("")
-# print("output:")
-# print(output)
-# print("")
-# print("")
+print("")
+print("")
+print("output:")
+print(output)
+print("")
+print("")
 
-# ai.printNetwork()
+ai.printNetwork()

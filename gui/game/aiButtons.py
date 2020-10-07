@@ -62,13 +62,22 @@ class AiButtons (RelativeLayout):
                 on_release = self.onShowRandomSnake
             )
 
+            self.showAiVis = Button(
+                text = "show ai vis",
+                # pos = (0 , 0),
+                # size_hint = (.1, .1),
+                on_release = self.onShowAiVis
+            )
+
             self.buttons.append(self.populationInput)
             self.buttons.append(self.create100)
             self.buttons.append(self.randomSnake)
+            self.buttons.append(self.showAiVis)
 
             self.add_widget(self.populationInput)
             self.add_widget(self.create100)
             self.add_widget(self.randomSnake)
+            self.add_widget(self.showAiVis)
 
             
             # calculation of button positions and size (depending on number of buttons)
@@ -106,6 +115,9 @@ class AiButtons (RelativeLayout):
 
     def onShowRandomSnake(self, a):
         self.game.showSnake(mode = "random")
+
+    def onShowAiVis(self, a):
+        self.game.showAiVis()
 
     def onChangePopulation(self, instance):
         self.game.data.tempPopulation = int(instance.text)
