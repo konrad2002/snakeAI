@@ -81,6 +81,10 @@ class GameController (RelativeLayout):
             self.ai = None
 
 
+
+        self.aiVisActive = False
+
+
         self.drawBorder()
         self.showMap()
         self.showInfoBar()
@@ -243,6 +247,8 @@ class GameController (RelativeLayout):
         if self.data.running and self.data.state < 4 and self.data.state > 2:
             self.move()
             self.map.update()
+            if self.aiVisActive:
+                self.aiVis.update()
 
     def move(self):
 
@@ -355,5 +361,7 @@ class GameController (RelativeLayout):
     def showAiVis(self):
 
         self.aiVis = AiVisualisation(self.main.settings.screenX, self.main.settings.screenY, self.ai)
+
+        self.aiVisActive = True
 
         self.add_widget(self.aiVis)
