@@ -99,7 +99,7 @@ class AiVisualisation (Widget):
                 for j,pre in enumerate(layer):
 
                     neuron = []
-                    for k,last in enumerate(pre):
+                    for k,_ in enumerate(pre):
                         
                         neuron.append(
                             Line(
@@ -108,7 +108,8 @@ class AiVisualisation (Widget):
                                     j * 50 + 50 + 15,
                                     i * 400 + 50 + 400,
                                     k * 50 + 50 + 15
-                                ]
+                                ],
+                                width = 5
                             )
                         )
                     
@@ -127,6 +128,11 @@ class AiVisualisation (Widget):
                 self.labels[i][j].text = str(value)
 
                 self.layers[i][j] = (round(neuron[2], 3)) / 32
+
+        for i,layer in enumerate(self.ann.weights):
+            for j,pre in enumerate(layer):
+                for k,last in enumerate(pre):
+                    self.weights[i][j][k].width = last * 3
 
 
     def onClose(self, a):
