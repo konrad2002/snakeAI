@@ -8,6 +8,6 @@ class RandomDirection (object):
 
         self.autoReady = True
 
-    def direction(self):
+    def direction(self, sensorData):
         newDirection = random.randint(0, 3)
         return newDirection

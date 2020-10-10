@@ -73,15 +73,6 @@ class GameController (RelativeLayout):
         self.pos = (self.x, self.y)
         self.size = (self.sizeX, self.sizeY)
 
-
-        # set ann
-        if self.type == 3 or self.type == 4:
-            self.ai = AiAnnExample([12, 8, 4], None, ["sigmoid", "sigmoid"], ["id", "id"])
-        else:
-            self.ai = None
-
-
-
         self.aiVisActive = False
 
 
@@ -190,17 +181,13 @@ class GameController (RelativeLayout):
 
         self.data.snakes.clear()
         for _ in range(self.data.population):
-            snake = Snake(self.data.startSize, self.data.foods)
-            
-            if self.type == 5:
-                snake.ai = RandomDirection()
-            elif self.type == 6:
-                snake.ai = AlgorithmDirection()
+            snake = Snake(self.data.startSize, self.data.foods, self.type)
 
             if self.type % 2 == 0:
                 snake.aiSensor = AiSensor(snake, 1)
             else:
                 snake.aiSensor = AiSensor(snake, 2)
+
 
             self.data.snakes.append(snake)
 
@@ -257,10 +244,8 @@ class GameController (RelativeLayout):
         for snake in self.data.snakes:
             if snake.death == False:
 
-                if not snake.ai == None:
-                    snake.newDirection = snake.ai.direction()
-                elif self.ai:
-                    snake.newDirection = self.ai.direction(snake.aiSensor.data)
+                if snake.ai:
+                    snake.newDirection = snake.ai.direction(snake.aiSensor.data)
 
                 alive = True
                 lastTile = snake.body[len(snake.body) - 1]

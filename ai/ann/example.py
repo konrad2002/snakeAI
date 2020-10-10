@@ -1,6 +1,7 @@
 # example code for a neural network
 
 import numpy as np
+import random
 from sklearn.utils.validation import check_random_state
 
 class AiAnnExample (object):
@@ -18,8 +19,8 @@ class AiAnnExample (object):
         self.activationF = activationF
         self.outputF = outputF
 
-
-        self.random_state_ = check_random_state(41)
+        self.randomInt = random.randint(10, 50)
+        self.random_state_ = check_random_state(self.randomInt)
 
 
         self.network = []
@@ -40,11 +41,11 @@ class AiAnnExample (object):
                 # init weights between layer and next layer with 0
                 if layer < ( len(self.nNeurons) - 1 ):
                     self.weights.append(
-                        #self.random_state_.random_sample((neurons + 1, self.nNeurons[layer + 1] + 1))
-                        np.ones((neurons + 1, self.nNeurons[layer + 1] + 1))
+                        self.random_state_.random_sample((neurons + 1, self.nNeurons[layer + 1] + 1))
+                        # np.ones((neurons + 1, self.nNeurons[layer + 1] + 1))
                     )
 
-        
+
         if weights:
             self.weights = weights
 
@@ -96,7 +97,7 @@ class AiAnnExample (object):
                 layer[1:,1] = self.function(self.activationF[i - 1], layer[1:,0])
 
                 layer[1:,2] = self.function(self.outputF[i - 1], layer[1:,1])
-            
+
         output = self.layers[len(self.nNeurons) - 1][:,2]
 
         return output

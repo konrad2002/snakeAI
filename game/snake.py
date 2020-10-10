@@ -2,11 +2,16 @@
 
 from game.tile import GameTile
 
+from ai.ann.example import AiAnnExample
+from ai.rand import RandomDirection
+from ai.algorithm import AlgorithmDirection
+
 class Snake (object):
-    def __init__ (self, startSize, foods):
+    def __init__ (self, startSize, foods, gameType):
 
         self.body = []
         self.foods = foods
+        self.gameType = gameType
 
         self.startSize = startSize
 
@@ -26,6 +31,15 @@ class Snake (object):
 
         self.ai = None
         self.aiSensor = None
+
+        # set ann
+        if self.gameType == 3 or self.gameType == 4:
+            self.ai = AiAnnExample([12, 8, 4], None, ["sigmoid", "sigmoid"], ["id", "id"])
+
+        if self.gameType == 5:
+            self.ai = RandomDirection()
+        elif self.gameType == 6:
+            self.ai = AlgorithmDirection()
 
     def eat(self):
         newTile = GameTile(

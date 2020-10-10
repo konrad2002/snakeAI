@@ -20,7 +20,6 @@ class AiVisualisation (Widget):
         self.draw()
 
 
-
     # create neurons and weights
     def draw(self):
 
@@ -57,7 +56,7 @@ class AiVisualisation (Widget):
                 neurons = []
                 neuronValues = []
                 for j,neuron in enumerate(layer):
-                    
+
                     brightness = 0.9
                     neurons.append(brightness)
 
@@ -76,10 +75,10 @@ class AiVisualisation (Widget):
                 self.labels.append(neuronValues)
 
 
-            
+
             for i,layer in enumerate(self.ann.layers):
                 for j,neuron in enumerate(layer):
-                    
+
                     if j == 0:
                         Color(1,0,0,1)
                     else:
@@ -94,13 +93,13 @@ class AiVisualisation (Widget):
             Color(1,1,1,1)
             self.weights = []
             for i,layer in enumerate(self.ann.weights):
-                
+
                 weight = []
                 for j,pre in enumerate(layer):
 
                     neuron = []
                     for k,_ in enumerate(pre):
-                        
+
                         neuron.append(
                             Line(
                                 points=[
@@ -112,7 +111,7 @@ class AiVisualisation (Widget):
                                 width = 5
                             )
                         )
-                    
+
                     weight.append(neuron)
 
                 self.weights.append(weight)

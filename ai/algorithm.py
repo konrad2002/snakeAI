@@ -6,6 +6,6 @@ class AlgorithmDirection (object):
 
         self.autoReady = True
 
-    def direction(self):
+    def direction(self, sensorData):
         newDirection = 2
         return newDirection

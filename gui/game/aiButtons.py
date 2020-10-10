@@ -79,7 +79,7 @@ class AiButtons (RelativeLayout):
             self.add_widget(self.randomSnake)
             self.add_widget(self.showAiVis)
 
-            
+
             # calculation of button positions and size (depending on number of buttons)
             self.sqrt = math.sqrt(len(self.buttons))
             self.cols = round(self.sqrt + 0.4999)
@@ -106,7 +106,7 @@ class AiButtons (RelativeLayout):
 
                 print("Button " + str(i) + ": " + str(col) + " | " + str(row))
 
-    
+
     def onReady(self, a):
         self.game.ready()
 
