@@ -216,6 +216,10 @@ class GameController (RelativeLayout):
         self.data.generation += 1
         self.buttons.readyBtn.color = (1,1,1,1)
 
+        if self.aiVisActive:
+            self.aiVis.onClose()
+            self.showAiVis()
+
     def update(self):
 
         self.infoBar.lbl1.text = str(self.main.settings.typeNames[self.type - 1])
@@ -345,7 +349,7 @@ class GameController (RelativeLayout):
 
     def showAiVis(self):
 
-        self.aiVis = AiVisualisation(self.main.settings.screenX, self.main.settings.screenY, self.ai)
+        self.aiVis = AiVisualisation(self.main.settings.screenX, self.main.settings.screenY, self.data.displayedSnake.ai)
 
         self.aiVisActive = True
 

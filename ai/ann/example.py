@@ -41,7 +41,7 @@ class AiAnnExample (object):
                 # init weights between layer and next layer with 0
                 if layer < ( len(self.nNeurons) - 1 ):
                     self.weights.append(
-                        self.random_state_.random_sample((neurons + 1, self.nNeurons[layer + 1] + 1))
+                        4 * self.random_state_.random_sample((neurons + 1, self.nNeurons[layer + 1] + 1)) - 2
                         # np.ones((neurons + 1, self.nNeurons[layer + 1] + 1))
                     )
 

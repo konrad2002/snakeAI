@@ -82,7 +82,7 @@ class AiVisualisation (Widget):
                     if j == 0:
                         Color(1,0,0,1)
                     else:
-                        Color(1,1,1,self.layers[i][j])
+                        Color(1,1,1, (neuron[2] / 32))
 
                     Ellipse(
                         pos=(i * 400 + 50, j * 50 + 50),
@@ -98,7 +98,13 @@ class AiVisualisation (Widget):
                 for j,pre in enumerate(layer):
 
                     neuron = []
-                    for k,_ in enumerate(pre):
+                    for k,last in enumerate(pre):
+
+                        if last > 0:
+                            Color(0.23, 0.53, 1,last)
+                        else:
+                            Color(1,0.23,0.23,last * (-1))
+
 
                         neuron.append(
                             Line(
@@ -121,6 +127,8 @@ class AiVisualisation (Widget):
     def update(self, a = None):
         print("update ai vis")
 
+        self.draw()
+
         for i,layer in enumerate(self.ann.layers):
             for j,neuron in enumerate(layer):
                 value = round(neuron[2], 3)
@@ -131,9 +139,11 @@ class AiVisualisation (Widget):
         for i,layer in enumerate(self.ann.weights):
             for j,pre in enumerate(layer):
                 for k,last in enumerate(pre):
-                    self.weights[i][j][k].width = last * 3
+                    if last <= 0:
+                        last = last * (-1)
+                    self.weights[i][j][k].width = last
 
 
-    def onClose(self, a):
+    def onClose(self, a = None):
         self.parent.aiVisActive = False
         self.parent.remove_widget(self.parent.aiVis)
