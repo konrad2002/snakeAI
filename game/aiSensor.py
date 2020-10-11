@@ -2,7 +2,7 @@
 
 class AiSensor (object):
     def __init__(self, snake, sensorType):
-        print("[game] created " + str(self.__class__))
+        # print("[game] created " + str(self.__class__))
 
         self.data = []
 

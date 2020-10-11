@@ -227,7 +227,7 @@ class GameController (RelativeLayout):
         self.infoBar.lbl3.text = "Highscore: " + str(self.data.highscore)
         if (self.data.state >= 1):
             self.infoBar.lbl4.text = "Länge: " + str(len(self.data.displayedSnake.body))
-            self.infoBar.lbl4.text = "Steps: " + str(self.data.displayedSnake.steps)
+            # self.infoBar.lbl4.text = "Fitness: " + str(round(self.data.fitness, 3))
             self.infoBar.lbl6.text = "Alive: " + str(self.data.population - self.data.dead) + " / " + str(self.data.population)
         
         if self.type <= 2 or self.type >= 5:
@@ -310,11 +310,24 @@ class GameController (RelativeLayout):
             self.data.running = False
             self.data.state = 4
             self.buttons.readyBtn.color = (1,0.4,0.4,1)
+
+            self.fitness = 0
             
             highscore = 0
             for snake in self.data.snakes:
                 if len(snake.body) > highscore:
                     highscore = len(snake.body)
+
+                scoreAdd = (len(snake.body) - self.data.startSize)
+                fitness = (scoreAdd * 10000000 ) / ( snake.steps ) / 100000
+                	
+                if fitness < self.data.fitness[scoreAdd][0]:
+                    self.data.fitness[scoreAdd][0] = fitness
+                if fitness > self.data.fitness[scoreAdd][1]:
+                    self.data.fitness[scoreAdd][1] = fitness
+
+                if fitness > self.fitness:
+                    self.fitness = fitness
 
             if self.data.highscore < highscore:
                 self.data.highscore = highscore
@@ -325,10 +338,15 @@ class GameController (RelativeLayout):
                 self.main.gameApp.cursor.execute(query)
                 self.main.gameApp.db.commit()
 
-            self.fitness = ((len(self.data.displayedSnake.body) - self.data.startSize) * 1000 ) / self.data.displayedSnake.steps
 
             print("[" + str(self.instance) + "] died with score   of " + str(highscore))
             print("[" + str(self.instance) + "] died with fitness of " + str(self.fitness))
+
+            print("")
+            print("FITNESS")
+            print(self.data.fitness)
+            print("")
+
 
             if self.type > 2:
                 self.ready()

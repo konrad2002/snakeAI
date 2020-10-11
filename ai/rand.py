@@ -4,7 +4,7 @@ import random
 
 class RandomDirection (object):
     def __init__ (self):
-        print("[game] created " + str(self.__class__))
+        # print("[game] created " + str(self.__class__))
 
         self.autoReady = True
 

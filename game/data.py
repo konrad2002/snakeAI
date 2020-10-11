@@ -28,6 +28,16 @@ class Data (object):
 
         self.dead = 0
 
+        self.fitness = [
+            [1000,0], # lenght 3
+            [1000,0], # lenght 4
+            [1000,0], # lenght 5
+            [1000,0], # lenght 6
+            [1000,0], # lenght 7
+            [1000,0], # lenght 8
+            [1000,0]  # lenght 9
+        ]
+
         # snakes and settings
         self.snakes = []
         self.foods = []
