@@ -7,11 +7,13 @@ from ai.rand import RandomDirection
 from ai.algorithm import AlgorithmDirection
 
 class Snake (object):
-    def __init__ (self, startSize, foods, gameType):
+    def __init__ (self, startSize, foods, gameType, weights):
 
         self.body = []
         self.foods = foods
         self.gameType = gameType
+
+        self.weights = weights
 
         self.startSize = startSize
 
@@ -31,12 +33,14 @@ class Snake (object):
 
         self.hasEaten = False
 
+        self.fitness = 0
+
         self.ai = None
         self.aiSensor = None
 
         # set ann
         if self.gameType == 3 or self.gameType == 4:
-            self.ai = AiAnnExample([12, 8, 4], None, ["sigmoid", "sigmoid"], ["id", "id"])
+            self.ai = AiAnnExample([12, 8, 4], self.weights, ["sigmoid", "sigmoid"], ["id", "id"])
 
         if self.gameType == 5:
             self.ai = RandomDirection()

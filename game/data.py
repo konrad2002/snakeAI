@@ -7,6 +7,8 @@ class Data (object):
         self.pause = False
         self.running = False
 
+        self.turn = 0
+        
         self.keyboardType = 0
 
         self.state = 0

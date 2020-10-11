@@ -12,7 +12,7 @@ class AiAnnExample (object):
                     outputF = ["id"]
                 ):
 
-        print("[ai  ] created " + str(self.__class__))
+        #print("[ai  ] created " + str(self.__class__))
 
         self.nNeurons = nNeurons
 
@@ -106,27 +106,27 @@ class AiAnnExample (object):
     def direction(self, sensorData):
 
         x = []
-        print("data  : " + str(sensorData))
+        #print("data  : " + str(sensorData))
 
         for data in sensorData:
             for subdata in data:
                 x.append(subdata)
 
-        print("input : " + str(x))
+        #print("input : " + str(x))
 
         output = self.predict(x)
 
-        print("output: " + str(output))
+        #print("output: " + str(output))
 
         maximum = 0
         newDirection = 0
         for i,a in enumerate(output):
-            if a > maximum:
-                maximum = a
-                newDirection = i
+            if i > 0:
+                if a > maximum:
+                    maximum = a
+                    newDirection = i - 1
 
-        print("direct: " + str(newDirection))
-        print("")
+        # print("direct: " + str(newDirection))
         return newDirection
 
 

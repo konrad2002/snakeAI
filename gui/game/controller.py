@@ -3,7 +3,9 @@
 from ai.rand import RandomDirection
 from ai.algorithm import AlgorithmDirection
 from ai.ann.example import AiAnnExample
+
 from ai.vis import AiVisualisation
+from ai.evolution import Evolution
 
 from game.data import Data
 from game.tile import GameTile
@@ -74,6 +76,11 @@ class GameController (RelativeLayout):
         self.size = (self.sizeX, self.sizeY)
 
         self.aiVisActive = False
+
+        # init evolutional behavior object
+        self.evolution = None
+        if self.type == 3 or self.type == 4:
+            self.evolution = Evolution()
 
 
         self.drawBorder()
@@ -176,12 +183,23 @@ class GameController (RelativeLayout):
 
             self.data.foods.append(newFood)
 
+
+        if self.data.turn > 1 and self.evolution:
+            self.evolution.generatePopulation(self.data.population)
+            self.evolution.doMutation()
+
+
         # create snake(s)
         self.data.population = self.data.tempPopulation
 
         self.data.snakes.clear()
-        for _ in range(self.data.population):
-            snake = Snake(self.data.startSize, self.data.foods, self.type)
+        for i in range(self.data.population):
+
+            newWeights = None
+            if self.data.turn > 1 and self.evolution:
+                newWeights = self.evolution.newGeneration.weights[i]
+
+            snake = Snake(self.data.startSize, self.data.foods, self.type, newWeights)
 
             if self.type % 2 == 0:
                 snake.aiSensor = AiSensor(snake, 1)
@@ -213,7 +231,7 @@ class GameController (RelativeLayout):
         self.data.running = True
         self.data.ready = False
         self.data.state = 3
-        self.data.generation += 1
+        self.data.turn += 1
         self.buttons.readyBtn.color = (1,1,1,1)
 
         if self.aiVisActive:
@@ -234,7 +252,7 @@ class GameController (RelativeLayout):
             txt = "Runde"
         else:
             txt = "Generation"
-        self.infoBar.lbl5.text = txt + ": " + str(self.data.generation)
+        self.infoBar.lbl5.text = txt + ": " + str(self.data.turn)
 
         if self.data.running and self.data.state < 4 and self.data.state > 2:
             self.move()
@@ -290,6 +308,11 @@ class GameController (RelativeLayout):
                     snake.body[0].y = snake.body[1].y
                     snake.die()
 
+                # if to long without eating
+
+                if ( snake.steps / ( len(snake.body) - self.data.startSize + 1 ) ) > 1000:
+                    snake.die()
+
                 for i,tile in enumerate(snake.body):
                     if i > 0:
                         if snake.body[0].x == tile.x and snake.body[0].y == tile.y:
@@ -307,27 +330,41 @@ class GameController (RelativeLayout):
 
 
         if not self.alive:
+            self.allDeath()
+
+
+    def allDeath(self):
+        
             self.data.running = False
             self.data.state = 4
             self.buttons.readyBtn.color = (1,0.4,0.4,1)
 
             self.fitness = 0
+            self.fitnesses = []
+            self.weights = []
             
             highscore = 0
+
+            # count highscore, collect weights and store fitnesses
             for snake in self.data.snakes:
                 if len(snake.body) > highscore:
                     highscore = len(snake.body)
 
                 scoreAdd = (len(snake.body) - self.data.startSize)
-                fitness = (scoreAdd * 10000000 ) / ( snake.steps ) / 100000
-                	
-                if fitness < self.data.fitness[scoreAdd][0]:
-                    self.data.fitness[scoreAdd][0] = fitness
-                if fitness > self.data.fitness[scoreAdd][1]:
-                    self.data.fitness[scoreAdd][1] = fitness
+                snake.fitness = (scoreAdd * 10000000 ) / ( snake.steps ) / 100000
 
-                if fitness > self.fitness:
-                    self.fitness = fitness
+                # store for evolution
+                if self.evolution:
+                    self.fitnesses.append(snake.fitness)
+                    self.weights.append(snake.ai.weights)
+                	
+                if snake.fitness < self.data.fitness[scoreAdd][0]:
+                    self.data.fitness[scoreAdd][0] = snake.fitness
+                if snake.fitness > self.data.fitness[scoreAdd][1]:
+                    self.data.fitness[scoreAdd][1] = snake.fitness
+
+                if snake.fitness > self.fitness:
+                    self.fitness = snake.fitness
 
             if self.data.highscore < highscore:
                 self.data.highscore = highscore
@@ -346,6 +383,10 @@ class GameController (RelativeLayout):
             print("FITNESS")
             print(self.data.fitness)
             print("")
+
+            if self.evolution:
+                self.evolution.getFitness(self.fitnesses)
+                self.evolution.getWeights(self.weights)
 
 
             if self.type > 2:
