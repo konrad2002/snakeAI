@@ -50,7 +50,18 @@ class Evolution (object):
         # generate weights of new generation
 
         self.newGeneration.weights = []
-        for _ in range(size):
+        for i in range(size):
+            print(
+                "reproduction progress: " +
+                str(
+                    round(
+                        i / size,
+                        3
+                    )
+                )
+                + "%"
+            )
+
             s = self.randomByValue(self.probability)
 
             self.newGeneration.weights.append(
@@ -71,8 +82,16 @@ class Evolution (object):
         for i,snake in enumerate(self.newGeneration.weights):
             for j,layer in enumerate(snake):
 
-                #                      ( current layer )     (all layers)  
-                print( str( round( ( ( (i + 1) * (j + 1) ) / weightLayers ) * 100, 3 ) ) + "%" )
+                print(
+                    "mutation progress: " + 
+                    str(
+                        round( #  (  current layer  )   (all layers) 
+                            ( ( ( (i + 1) * 2 ) - j ) / weightLayers ) * 100,
+                            3
+                        )
+                    ) 
+                    + "%"
+                )
 
                 for k,pre in enumerate(layer):
                     for l,value in enumerate(pre):
