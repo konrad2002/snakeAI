@@ -69,15 +69,24 @@ class AiButtons (RelativeLayout):
                 on_release = self.onShowAiVis
             )
 
+            self.setEvolution = Button(
+                text = "evolution: disabled",
+                # pos = (0 , 0),
+                # size_hint = (.1, .1),
+                on_release = self.toggleEvolution
+            )
+
             self.buttons.append(self.populationInput)
             self.buttons.append(self.create100)
             self.buttons.append(self.randomSnake)
             self.buttons.append(self.showAiVis)
+            self.buttons.append(self.setEvolution)
 
             self.add_widget(self.populationInput)
             self.add_widget(self.create100)
             self.add_widget(self.randomSnake)
             self.add_widget(self.showAiVis)
+            self.add_widget(self.setEvolution)
 
 
             # calculation of button positions and size (depending on number of buttons)
@@ -121,3 +130,15 @@ class AiButtons (RelativeLayout):
 
     def onChangePopulation(self, instance):
         self.game.data.tempPopulation = int(instance.text)
+
+    def toggleEvolution(self, btn):
+
+        if "disabled" in btn.text:
+            self.game.data.doEvolution = True
+            btn.text = "evolution: enabled"
+            print("enabled evolution")
+        elif "enabled" in btn.text:
+            self.game.data.doEvolution = False
+            btn.text = "evolution: disabled"
+            print("disabled evolution")
+

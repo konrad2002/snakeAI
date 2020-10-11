@@ -21,6 +21,8 @@ class Data (object):
         self.eta = 0.1
 
         # Evolutional Algorithm settings
+        self.doEvolution = False
+
         self.generation = 0
         self.population = 1
 
