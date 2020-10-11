@@ -227,6 +227,7 @@ class GameController (RelativeLayout):
         self.infoBar.lbl3.text = "Highscore: " + str(self.data.highscore)
         if (self.data.state >= 1):
             self.infoBar.lbl4.text = "Länge: " + str(len(self.data.displayedSnake.body))
+            self.infoBar.lbl4.text = "Steps: " + str(self.data.displayedSnake.steps)
             self.infoBar.lbl6.text = "Alive: " + str(self.data.population - self.data.dead) + " / " + str(self.data.population)
         
         if self.type <= 2 or self.type >= 5:
@@ -247,6 +248,8 @@ class GameController (RelativeLayout):
         dead = 0
         for snake in self.data.snakes:
             if snake.death == False:
+
+                snake.steps += 1
 
                 if snake.ai:
                     snake.newDirection = snake.ai.direction(snake.aiSensor.data)
@@ -322,7 +325,10 @@ class GameController (RelativeLayout):
                 self.main.gameApp.cursor.execute(query)
                 self.main.gameApp.db.commit()
 
-            print("[" + str(self.instance) + "] died with score of " + str(highscore))
+            self.fitness = ((len(self.data.displayedSnake.body) - self.data.startSize) * 1000 ) / self.data.displayedSnake.steps
+
+            print("[" + str(self.instance) + "] died with score   of " + str(highscore))
+            print("[" + str(self.instance) + "] died with fitness of " + str(self.fitness))
 
             if self.type > 2:
                 self.ready()

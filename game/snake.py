@@ -24,6 +24,8 @@ class Snake (object):
 
         self.direction = 1
         self.newDirection = 1
+
+        self.steps = 0
         
         self.death = False
 
