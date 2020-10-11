@@ -344,11 +344,15 @@ class GameController (RelativeLayout):
             self.weights = []
             
             highscore = 0
+            lowscore = 100
 
             # count highscore, collect weights and store fitnesses
             for snake in self.data.snakes:
                 if len(snake.body) > highscore:
                     highscore = len(snake.body)
+
+                if len(snake.body) < lowscore:
+                    lowscore = len(snake.body)
 
                 scoreAdd = (len(snake.body) - self.data.startSize)
                 snake.fitness = (scoreAdd * 10000000 ) / ( snake.steps ) / 100000
@@ -376,13 +380,11 @@ class GameController (RelativeLayout):
                 self.main.gameApp.db.commit()
 
 
-            print("[" + str(self.instance) + "] died with score   of " + str(highscore))
-            print("[" + str(self.instance) + "] died with fitness of " + str(self.fitness))
+            print("[" + str(self.instance) + "] highscore:  " + str(highscore))
+            print("[" + str(self.instance) + "] lowscore:   " + str(lowscore))
+            print("[" + str(self.instance) + "] fitness:    " + str(self.fitness))
 
-            print("")
-            print("FITNESS")
-            print(self.data.fitness)
-            print("")
+
 
             if self.evolution:
                 self.evolution.getFitness(self.fitnesses)

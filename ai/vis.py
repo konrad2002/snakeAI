@@ -82,7 +82,7 @@ class AiVisualisation (Widget):
                     if j == 0:
                         Color(1,0,0,1)
                     else:
-                        Color(1,1,1, (neuron[2] / 32))
+                        Color(1,1,1, (neuron[2]))
 
                     Ellipse(
                         pos=(i * 400 + 50, j * 50 + 50),
@@ -134,14 +134,14 @@ class AiVisualisation (Widget):
                 value = round(neuron[2], 3)
                 self.labels[i][j].text = str(value)
 
-                self.layers[i][j] = (round(neuron[2], 3)) / 32
+                self.layers[i][j] = (round(neuron[2], 3))
 
         for i,layer in enumerate(self.ann.weights):
             for j,pre in enumerate(layer):
                 for k,last in enumerate(pre):
                     if last <= 0:
                         last = last * (-1)
-                    self.weights[i][j][k].width = last
+                    self.weights[i][j][k].width = last + 0.000001
 
 
     def onClose(self, a = None):

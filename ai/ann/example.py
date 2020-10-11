@@ -41,8 +41,9 @@ class AiAnnExample (object):
                 # init weights between layer and next layer with 0
                 if layer < ( len(self.nNeurons) - 1 ):
                     self.weights.append(
-                        4 * self.random_state_.random_sample((neurons + 1, self.nNeurons[layer + 1] + 1)) - 2
+                        2 * self.random_state_.random_sample((neurons + 1, self.nNeurons[layer + 1] + 1)) - 1
                         # np.ones((neurons + 1, self.nNeurons[layer + 1] + 1))
+                        # np.zeros((neurons + 1, self.nNeurons[layer + 1] + 1))
                     )
 
 
@@ -110,6 +111,8 @@ class AiAnnExample (object):
 
         for data in sensorData:
             for subdata in data:
+                if subdata > 0:
+                    subdata = 1 / subdata
                 x.append(subdata)
 
         #print("input : " + str(x))

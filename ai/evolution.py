@@ -25,8 +25,6 @@ class Evolution (object):
 
 
     def getFitness(self, fitnesses):
-        print("getting fitness...")
-        print(fitnesses)
         print("stored fitness for " + str(len(fitnesses)) + " snakes")
 
         self.lastGeneration.fitnesses = fitnesses
@@ -51,24 +49,24 @@ class Evolution (object):
 
         self.newGeneration.weights = []
         for i in range(size):
-            print(
-                "reproduction progress: " +
-                str(
-                    round(
-                        i / size,
-                        3
+
+            if i % 100 == 0:
+                print(
+                    "reproduction progress: " +
+                    str(
+                        round(
+                            i / size,
+                            3
+                        ) * 100
                     )
+                    + "%"
                 )
-                + "%"
-            )
 
             s = self.randomByValue(self.probability)
 
             self.newGeneration.weights.append(
                 self.lastGeneration.weights[s]
             )
-
-        print("debug")
 
 
 
@@ -77,28 +75,31 @@ class Evolution (object):
 
         reproduction = [True, False, False, False, False, False, False, False, False, False, False, False]
 
-        weightLayers = len(self.newGeneration.weights[:])
+        weightLayers = len(self.newGeneration.weights)
 
         for i,snake in enumerate(self.newGeneration.weights):
-            for j,layer in enumerate(snake):
-
+            
+            if i % 100 == 0:
                 print(
                     "mutation progress: " + 
                     str(
                         round( #  (  current layer  )   (all layers) 
-                            ( ( ( (i + 1) * 2 ) - j ) / weightLayers ) * 100,
+                            ( i / weightLayers ) * 100,
                             3
                         )
                     ) 
                     + "%"
                 )
 
+            for j,layer in enumerate(snake):
+
                 for k,pre in enumerate(layer):
                     for l,value in enumerate(pre):
 
                         changeWeight = random.choice(reproduction)
                         if changeWeight:
-                            r = random.randint(-3, 3)
+                            r = random.randint(-2, 2)
+                            r = r / 10
                             self.newGeneration.weights[i][j][k][l] = value + r
 
 

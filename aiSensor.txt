@@ -2,22 +2,22 @@ aiSensor
 
 TYPE 1:
     wall:
-        top
-        right
-        bottom
-        left
+        1/top
+        1/right
+        1/bottom
+        1/left
 
     food:
-        top
-        right
-        bottom
-        left
+        1/top
+        1/right
+        1/bottom
+        1/left
 
     body:
-        top
-        right
-        bottom
-        left
+        1/top
+        1/right
+        1/bottom
+        1/left
 
 TYPE 2:
     head:

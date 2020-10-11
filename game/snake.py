@@ -40,7 +40,7 @@ class Snake (object):
 
         # set ann
         if self.gameType == 3 or self.gameType == 4:
-            self.ai = AiAnnExample([12, 8, 4], self.weights, ["sigmoid", "sigmoid"], ["id", "id"])
+            self.ai = AiAnnExample([12, 16, 4], self.weights, ["sigmoid", "sigmoid"], ["id", "id"])
 
         if self.gameType == 5:
             self.ai = RandomDirection()
