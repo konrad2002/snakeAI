@@ -353,7 +353,8 @@ class GameController (RelativeLayout):
                     lowscore = len(snake.body)
 
                 scoreAdd = (len(snake.body) - self.data.startSize)
-                snake.fitness = (scoreAdd * 10000000 ) / ( snake.steps ) / 100000
+                # snake.fitness = (scoreAdd * 10000000 ) / ( snake.steps ) / 100000
+                snake.fitness = snake.steps
 
                 # store for evolution
                 if self.evolution:
