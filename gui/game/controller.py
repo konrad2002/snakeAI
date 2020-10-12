@@ -267,6 +267,8 @@ class GameController (RelativeLayout):
         for snake in self.data.snakes:
             if snake.death == False:
 
+                snake.aiSensor.update()
+
                 snake.steps += 1
 
                 if snake.ai:
@@ -318,10 +320,6 @@ class GameController (RelativeLayout):
                         if snake.body[0].x == tile.x and snake.body[0].y == tile.y:
                             snake.die()
 
-
-                if snake.death == False:
-
-                    snake.aiSensor.update()
 
             else:
                 dead += 1
