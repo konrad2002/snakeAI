@@ -73,7 +73,7 @@ class Evolution (object):
     def doMutation(self):
         print("mutating...")
 
-        reproduction = [True, False, False, False, False, False, False, False, False, False, False, False]
+        reproduction = [True, False, False, False]
 
         weightLayers = len(self.newGeneration.weights)
 
