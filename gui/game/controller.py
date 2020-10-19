@@ -312,8 +312,8 @@ class GameController (RelativeLayout):
 
                 # if to long without eating
 
-                if ( snake.steps / ( len(snake.body) - self.data.startSize + 1 ) ) > 1000:
-                    snake.die()
+                # if ( snake.steps / ( len(snake.body) - self.data.startSize + 1 ) ) > 1000:
+                #     snake.die()
 
                 for i,tile in enumerate(snake.body):
                     if i > 0:

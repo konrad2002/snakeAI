@@ -27,12 +27,14 @@ class Evolution (object):
     def getFitness(self, fitnesses):
         print("stored fitness for " + str(len(fitnesses)) + " snakes")
 
+        self.lastGeneration.fitnesses.clear()
         self.lastGeneration.fitnesses = fitnesses
 
 
     def getWeights(self, weights):
         print("stored weights for " + str(len(weights)) + " snakes")
 
+        self.lastGeneration.weights.clear()
         self.lastGeneration.weights = weights
 
 
@@ -96,11 +98,15 @@ class Evolution (object):
                 for k,pre in enumerate(layer):
                     for l,value in enumerate(pre):
 
-                        changeWeight = random.choice(reproduction)
+                        # changeWeight = random.choice(reproduction)
+                        changeWeight = True
                         if changeWeight:
-                            r = random.randint(-2, 2)
-                            r = r / 10
-                            self.newGeneration.weights[i][j][k][l] = value + r
+                            r = random.randint(-100, 100)
+                            r = r / 100
+                            newValue = value + r
+                            print(str(i) + "|" + str(j) + "|" + str(k) + "|" + str(l) + ": " + str(value) + " -> " + str(r) + " => " + str(newValue))
+                            
+                            self.newGeneration.weights[i][j][k][l] = newValue
 
 
 
