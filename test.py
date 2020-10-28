@@ -1,5 +1,7 @@
 # check if object given to a function of a other object is a copy or a reference
 
+import numpy as np
+
 test = ["test1", "test2", "test3"]
 
 print(test)
@@ -20,9 +22,29 @@ class Main (object):
     def __init__ (self):
         self.test = "Johann"
         print(self.test)
+        self.data = np.ones((10, 5))
+
+        self.data[1,1] = 5
+        self.data[1,3] = 5
+        self.data[2,0] = 5
+        self.data[4,2] = 5
+        self.data[8,3] = 5
 
     def output (self):
         print(self.test)
+
+    def doMutation(self):
+
+        print(self.data)
+        newData = self.data
+        for i,row in enumerate(newData):
+            for j,tile in enumerate(row):
+                if (i == 1 and j == 1):
+                    print(self.data)
+                self.data[i][j] = tile * 2
+        print(self.data)
+
+        print("done")
 
 
 class Test (object):
@@ -48,3 +70,5 @@ test.change(main)
 test.output(main)
 
 main.output()
+
+main.doMutation()

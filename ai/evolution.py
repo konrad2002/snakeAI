@@ -49,7 +49,7 @@ class Evolution (object):
 
         # generate weights of new generation
 
-        self.newGeneration.weights = []
+        self.newGeneration.weights.clear()
         for i in range(size):
 
             if i % 100 == 0:
@@ -75,39 +75,47 @@ class Evolution (object):
     def doMutation(self):
         print("mutating...")
 
-        reproduction = [True, False, False, False]
+        # reproduction = [True, False, False, False]
 
-        weightLayers = len(self.newGeneration.weights)
+        # weightLayers = len(self.newGeneration.weights)
+
+        self.tempNewWeights = []
 
         for i,snake in enumerate(self.newGeneration.weights):
             
-            if i % 100 == 0:
-                print(
-                    "mutation progress: " + 
-                    str(
-                        round( #  (  current layer  )   (all layers) 
-                            ( i / weightLayers ) * 100,
-                            3
-                        )
-                    ) 
-                    + "%"
-                )
+            # if i % 100 == 0:
+            #     print(
+            #         "mutation progress: " + 
+            #         str(
+            #             round( #  (  current layer  )   (all layers) 
+            #                 ( i / weightLayers ) * 100,
+            #                 3
+            #             )
+            #         ) 
+            #         + "%"
+            #     )
 
+            self.tempNewWeights.append([])
             for j,layer in enumerate(snake):
+                self.tempNewWeights.append([])
+                for idx,value in np.ndenumerate(layer):
 
-                for k,pre in enumerate(layer):
-                    for l,value in enumerate(pre):
+                    # changeWeight = random.choice(reproduction)
+                    changeWeight = True
+                    if changeWeight:
+                        r = random.randint(-100, 100)
+                        r = r / 100
+                        newValue = value + r
 
-                        # changeWeight = random.choice(reproduction)
-                        changeWeight = True
-                        if changeWeight:
-                            r = random.randint(-100, 100)
-                            r = r / 100
-                            newValue = value + r
-                            print(str(i) + "|" + str(j) + "|" + str(k) + "|" + str(l) + ": " + str(value) + " -> " + str(r) + " => " + str(newValue))
-                            
-                            self.newGeneration.weights[i][j][k][l] = newValue
+                        self.tempNewWeights.append(newValue)
 
+                        # print(str(i) + "|" + str(j) + "|" + str(k) + "|" + str(l) + ": " + str(value) + " -> " + str(r) + " => " + str(newValue))
+
+            self.tempNewWeights.append(self.newGeneration.weights[i])
+
+        for i,snake in enumerate(self.tempNewWeights):
+            print(str(i) + " => " + str(snake[0][(0,0)]))
+        print("mutation done")
 
 
 
@@ -131,3 +139,13 @@ class Evolution (object):
             self.randomIndex = random.randint(0, len(array) - 1)
 
         return self.randomIndex
+
+    def doRecombination():
+        pass
+
+
+
+
+    # -15.125783906293101 -> -0.77 => -15.8957839062931
+    # -8.153571347657783 -> 0.84 => -7.313571347657783
+    # -8.023571347657782 -> -0.13 => -8.153571347657783

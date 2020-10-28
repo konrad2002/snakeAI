@@ -19,8 +19,8 @@ class AiAnnExample (object):
         self.activationF = activationF
         self.outputF = outputF
 
-        self.randomInt = random.randint(10, 50)
-        self.random_state_ = check_random_state(self.randomInt)
+        # self.randomInt = random.randint(10, 50)
+        # self.random_state_ = check_random_state(self.randomInt)
 
 
         self.network = []
@@ -41,8 +41,8 @@ class AiAnnExample (object):
                 # init weights between layer and next layer with 0
                 if layer < ( len(self.nNeurons) - 1 ):
                     self.weights.append(
-                        2 * self.random_state_.random_sample((neurons + 1, self.nNeurons[layer + 1] + 1)) - 1
-                        # np.ones((neurons + 1, self.nNeurons[layer + 1] + 1))
+                        # 2 * self.random_state_.random_sample((neurons + 1, self.nNeurons[layer + 1] + 1)) - 1
+                        np.ones((neurons + 1, self.nNeurons[layer + 1] + 1))
                         # np.zeros((neurons + 1, self.nNeurons[layer + 1] + 1))
                     )
 
