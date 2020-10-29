@@ -82,7 +82,7 @@ class Evolution (object):
         self.tempNewWeights = []
 
         for i,snake in enumerate(self.newGeneration.weights):
-            
+
             # if i % 100 == 0:
             #     print(
             #         "mutation progress: " + 
