@@ -310,9 +310,9 @@ class GameController (RelativeLayout):
                     snake.body[0].y = snake.body[1].y
                     snake.die()
 
-                # if to long without eating
+                # if to long without eating (to prevent infinity)
 
-                if ( snake.steps / ( len(snake.body) - self.data.startSize + 1 ) ) > 1000:
+                if ( snake.steps / ( len(snake.body) - self.data.startSize + 1 ) ) > 500:
                     snake.die()
 
                 for i,tile in enumerate(snake.body):
@@ -361,10 +361,10 @@ class GameController (RelativeLayout):
                     self.fitnesses.append(snake.fitness)
                     self.weights.append(snake.ai.weights)
                 	
-                if snake.fitness < self.data.fitness[scoreAdd][0]:
-                    self.data.fitness[scoreAdd][0] = snake.fitness
-                if snake.fitness > self.data.fitness[scoreAdd][1]:
-                    self.data.fitness[scoreAdd][1] = snake.fitness
+                # if snake.fitness < self.data.fitness[scoreAdd][0]:
+                #     self.data.fitness[scoreAdd][0] = snake.fitness
+                # if snake.fitness > self.data.fitness[scoreAdd][1]:
+                #     self.data.fitness[scoreAdd][1] = snake.fitness
 
                 if snake.fitness > self.fitness:
                     self.fitness = snake.fitness
