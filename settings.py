@@ -7,7 +7,7 @@ class Settings (object):
         self.configurated = False
 
         self.screenX = 1400
-        self.screenY = 800
+        self.screenY = 1000
 
         self.typeNames = ["Spieler normal", "Spieler Snake", "KNN normal", "KNN Snake", "Zufall", "Algorithmus"]
 
