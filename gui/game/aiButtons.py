@@ -76,17 +76,26 @@ class AiButtons (RelativeLayout):
                 on_release = self.toggleEvolution
             )
 
+            self.saveDbButton = Button(
+                text = "save2Db",
+                # pos = (0 , 0),
+                # size_hint = (.1, .1),
+                on_release = self.saveToDb
+            )
+
             self.buttons.append(self.populationInput)
             self.buttons.append(self.create100)
             self.buttons.append(self.randomSnake)
             self.buttons.append(self.showAiVis)
             self.buttons.append(self.setEvolution)
+            self.buttons.append(self.saveDbButton)
 
             self.add_widget(self.populationInput)
             self.add_widget(self.create100)
             self.add_widget(self.randomSnake)
             self.add_widget(self.showAiVis)
             self.add_widget(self.setEvolution)
+            self.add_widget(self.saveDbButton)
 
 
             # calculation of button positions and size (depending on number of buttons)
@@ -142,3 +151,6 @@ class AiButtons (RelativeLayout):
             btn.text = "evolution: disabled"
             print("disabled evolution")
 
+
+    def saveToDb(self, a):
+        

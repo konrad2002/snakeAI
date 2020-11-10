@@ -29,7 +29,7 @@ import random
 
 
 class GameController (RelativeLayout):
-    def __init__ (self, mainController, instance = 1, **kwargs):
+    def __init__ (self, mainController, instance = 1, snakeId = None, **kwargs):
         super(GameController, self).__init__(**kwargs)
         print("[game] created " + str(self.__class__))
 
@@ -37,7 +37,7 @@ class GameController (RelativeLayout):
 
         self.instance = instance
 
-        self.data = Data()
+        self.data = Data(snakeId)
 
         self.type = self.main.settings.playerTypes[self.instance - 1]
 

@@ -1,7 +1,10 @@
 # class with all stored values of one snake game
 
 class Data (object):
-    def __init__(self):
+    def __init__(self, snakeId):
+
+        self.snakeId = snakeId
+
         self.speed = 1
         self.ready = False
         self.pause = False
@@ -13,7 +16,9 @@ class Data (object):
 
         self.state = 0
 
+        # highscore of currently best snake
         self.highscore = 0
+        # highscore of all snakes with these type
         self.best = 0
 
         # KNN (Perceptron) settings
@@ -52,3 +57,19 @@ class Data (object):
 
         self.aiSensor = []
         self.sensorType = 0
+
+        self.fitnesses = ""
+        self.scores = ""
+
+    def setSettings (self, highscore, epochs, batch, iterations, eta, generation, population, startSize, fitnesses, scores):
+
+        self.highscore = highscore
+        self.epochs = epochs
+        self.batch = batch
+        self.iterations = iterations
+        self.eta = eta
+        self.generation = generation
+        self.population = population
+        self.startSize = startSize
+        self.fitnesses = fitnesses
+        self.scores = scores
