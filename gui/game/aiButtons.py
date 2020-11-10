@@ -153,4 +153,4 @@ class AiButtons (RelativeLayout):
 
 
     def saveToDb(self, a):
-        
+        self.game.saveToDb()

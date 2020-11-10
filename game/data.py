@@ -1,9 +1,14 @@
 # class with all stored values of one snake game
 
+import random
+
 class Data (object):
     def __init__(self, snakeId):
 
         self.snakeId = snakeId
+
+        if self.snakeId == None:
+            self.snakeId = random.randint(100000, 999999)
 
         self.speed = 1
         self.ready = False

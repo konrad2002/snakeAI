@@ -420,3 +420,7 @@ class GameController (RelativeLayout):
         self.aiVisActive = True
 
         self.add_widget(self.aiVis)
+
+    def saveToDb(self):
+        sql_command = "INSERT INTO `snakes` (snake_id, player_type, highscore, best_weights, best_fitness, worst_weights, worst_fitness, fitnesses, scores, generations, population, iterations, eta, epochs, batch, start_size, fitness_function_id, activation_functions, output_functions) VALUES (" + str(self.data.snakeId) + ", " + str(self.main.settings.playerTypes[self.instance]) + ", " + str(self.data.highscore) + ", '" + str(self.data.snakes[0].weights) + "', " + str(self.data.snakes[0].fitness) + ", '" + str(self.data.snakes[0].weights) + "', " + str(self.data.snakes[0].fitness) + ", " + str(self.data.highscore) + ", '" + str(self.data.fitnesses) + "', '" + str(self.data.scores) + "', " + str(self.data.generation) + ", " + str(self.data.population) + ", " + str(self.data.iterations) + ", " + str(self.data.eta) + ", " + str(self.data.epochs) + ", " + str(self.data.batch) + ", " + str(self.data.startSize) + ", " + str(1) + ", '" + str(self.data.snakes[0].ai.activationF) + "', '" + str(self.data.snakes[0].ai.outputF) + "');"
+
