@@ -35,7 +35,7 @@ class Data (object):
         # Evolutional Algorithm settings
         self.doEvolution = False
 
-        self.generation = 0
+        self.generation = 1
         self.population = 1
 
         self.tempPopulation = 1
@@ -58,13 +58,19 @@ class Data (object):
 
         self.displayedSnake = None
 
+        self.bestSnake = None
+        self.worstSnake = None
+
+        self.bestFitness = 0
+        self.worstFitness = 100
+
         self.startSize = 3
 
         self.aiSensor = []
         self.sensorType = 0
 
-        self.fitnesses = ""
-        self.scores = ""
+        self.fitnesses = []
+        self.scores = []
 
     def setSettings (self, highscore, epochs, batch, iterations, eta, generation, population, startSize, fitnesses, scores):
 

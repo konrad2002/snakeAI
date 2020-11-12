@@ -125,7 +125,6 @@ class AiVisualisation (Widget):
 
     # update colors and strength
     def update(self, a = None):
-        print("update ai vis")
 
         self.draw()
 

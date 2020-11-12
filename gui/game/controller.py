@@ -186,6 +186,7 @@ class GameController (RelativeLayout):
 
         if self.data.turn > 1 and self.evolution:
             self.evolution.generatePopulation(self.data.population)
+            self.data.generation += 1
             self.evolution.doMutation()
 
 
@@ -340,9 +341,17 @@ class GameController (RelativeLayout):
             self.fitness = 0
             self.fitnesses = []
             self.weights = []
-            
+            self.scores = []
+
+            self.data.bestSnake = None
+            self.data.worstSnake = None
+
+            self.data.bestFitness = 0
+            self.data.worstFitness = 100
+
             highscore = 0
             lowscore = 100
+
 
             # count highscore, collect weights and store fitnesses
             for snake in self.data.snakes:
@@ -354,11 +363,20 @@ class GameController (RelativeLayout):
 
                 scoreAdd = (len(snake.body) - self.data.startSize)
                 snake.fitness = (scoreAdd * 10000000 ) / ( snake.steps ) / 100000
+
+
+                if snake.fitness > self.data.bestFitness:
+                    self.data.bestSnake = snake
+
+                if snake.fitness < self.data.worstFitness:
+                    self.data.worstSnake = snake
+
                 # snake.fitness = snake.steps
 
                 # store for evolution
                 if self.evolution:
                     self.fitnesses.append(snake.fitness)
+                    self.scores.append(len(snake.body))
                     self.weights.append(snake.ai.weights)
                 	
                 # if snake.fitness < self.data.fitness[scoreAdd][0]:
@@ -377,6 +395,13 @@ class GameController (RelativeLayout):
                 query = "UPDATE highscores SET highscore = " + str(highscore) + " WHERE playerType = " + str(self.type)
                 self.main.gameApp.cursor.execute(query)
                 self.main.gameApp.db.commit()
+
+            self.data.fitnesses.append(self.fitnesses)
+            self.data.scores.append(self.scores)
+
+
+            if self.data.turn > 1 and self.evolution:
+                self.saveToDb()
 
 
             print("[" + str(self.instance) + "] highscore:  " + str(highscore))
@@ -422,5 +447,24 @@ class GameController (RelativeLayout):
         self.add_widget(self.aiVis)
 
     def saveToDb(self):
-        sql_command = "INSERT INTO `snakes` (snake_id, player_type, highscore, best_weights, best_fitness, worst_weights, worst_fitness, fitnesses, scores, generations, population, iterations, eta, epochs, batch, start_size, fitness_function_id, activation_functions, output_functions) VALUES (" + str(self.data.snakeId) + ", " + str(self.main.settings.playerTypes[self.instance]) + ", " + str(self.data.highscore) + ", '" + str(self.data.snakes[0].weights) + "', " + str(self.data.snakes[0].fitness) + ", '" + str(self.data.snakes[0].weights) + "', " + str(self.data.snakes[0].fitness) + ", " + str(self.data.highscore) + ", '" + str(self.data.fitnesses) + "', '" + str(self.data.scores) + "', " + str(self.data.generation) + ", " + str(self.data.population) + ", " + str(self.data.iterations) + ", " + str(self.data.eta) + ", " + str(self.data.epochs) + ", " + str(self.data.batch) + ", " + str(self.data.startSize) + ", " + str(1) + ", '" + str(self.data.snakes[0].ai.activationF) + "', '" + str(self.data.snakes[0].ai.outputF) + "');"
 
+        # check if snake is already in database
+        query = "SELECT id FROM snakes WHERE snake_id = '" + str(self.data.snakeId) + "';"
+        self.main.gameApp.cursor.execute(query)
+        rows = self.main.gameApp.cursor.fetchall()
+
+
+        db_id = 0
+        for row in rows:
+            db_id = row[0]
+
+
+        if db_id == 0:
+
+            query = "INSERT INTO `snakes` (snake_id, player_type, highscore, best_weights, best_fitness, worst_weights, worst_fitness, fitnesses, scores, generations, population, iterations, eta, epochs, batch, start_size, fitness_function_id, activation_functions, output_functions) VALUES (" + str(self.data.snakeId) + ", " + str(self.type) + ", " + str(self.data.highscore) + ", \"" + str(self.data.bestSnake.weights) + "\", " + str(self.data.bestSnake.fitness) + ", \"" + str(self.data.worstSnake.weights) + "\", " + str(self.data.worstSnake.fitness) + ", \"" + str(self.data.fitnesses) + "\", \"" + str(self.data.scores) + "\", " + str(self.data.generation) + ", " + str(self.data.population) + ", " + str(self.data.iterations) + ", " + str(self.data.eta) + ", " + str(self.data.epochs) + ", " + str(self.data.batch) + ", " + str(self.data.startSize) + ", " + str(1) + ", \"" + str(self.data.snakes[0].ai.activationF) + "\", \"" + str(self.data.snakes[0].ai.outputF) + "\");"
+
+        else:
+            query = "UPDATE `snakes` SET player_type = " + str(self.type) + ", highscore = " + str(self.data.highscore) + ", best_weights = \"" + str(self.data.snakes[0].weights) + "\", best_fitness = " + str(self.data.snakes[0].fitness) + ", worst_weights = \"" + str(self.data.snakes[0].weights) + "\", worst_fitness = " + str(self.data.snakes[0].fitness) + ", fitnesses = \"" + str(self.data.fitnesses) + "\", scores = \"" + str(self.data.scores) + "\", generations = " + str(self.data.generation) + ", population = " + str(self.data.population) + ", iterations = " + str(self.data.iterations) + ", eta = " + str(self.data.eta) + ", epochs = " + str(self.data.epochs) + ", batch = " + str(self.data.batch) + ", start_size = " + str(self.data.startSize) + ", fitness_function_id = " + str(1) + ", activation_functions = \"" + str(self.data.snakes[0].ai.activationF) + "\", output_functions = \"" + str(self.data.snakes[0].ai.outputF) + "\" WHERE snake_id = \"" + str(self.data.snakeId) + "\";"
+
+        self.main.gameApp.cursor.execute(query)
+        self.main.gameApp.db.commit()
