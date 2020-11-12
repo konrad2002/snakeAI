@@ -1,2 +1,3 @@
 */__pycache__/*
 *.pyc
+gui/app/database.py

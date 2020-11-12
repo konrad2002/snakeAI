@@ -50,7 +50,7 @@ class AiButtons (RelativeLayout):
                 multiline = False
             )
             self.create100 = Button(
-                text = "100 Snakes",
+                text = "2000 Snakes",
                 # pos = (0 , 0),
                 # size_hint = (.1, .1),
                 on_release = self.on100snakes
@@ -105,13 +105,13 @@ class AiButtons (RelativeLayout):
             for i,button in enumerate(self.buttons):
                 if self.game.main.settings.playerMode != 2:
                     button.size_hint = (
-                        0.1,
-                        ( 1 / self.cols - ( 0.15 / self.cols ) )
+                        0.1, # means 10% of window
+                        ( 1 / self.cols - ( 0.30 / self.cols ) )
                     )
                 else:
                     button.size_hint = (
                         1 / self.cols,
-                        0.06
+                        0.1
                     )
 
                 row = round( ( i / self.cols ) + 0.500001 ) - 1
@@ -129,7 +129,7 @@ class AiButtons (RelativeLayout):
         self.game.ready()
 
     def on100snakes(self, a):
-        self.game.data.tempPopulation = 100
+        self.game.data.tempPopulation = 2000
 
     def onShowRandomSnake(self, a):
         self.game.showSnake(mode = "random")

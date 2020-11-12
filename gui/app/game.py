@@ -11,8 +11,6 @@ from kivy.uix.button import Button
 from kivy.core.window import Window
 from kivy.clock import Clock
 
-import sqlite3
-
 class GameApp (App):
     def build(self):
         print("[game] created " + str(self.__class__))
@@ -25,7 +23,7 @@ class GameApp (App):
 
         self.games = []
 
-        self.db = sqlite3.connect("file:snake.db?mode=rwc", uri=True)
+        self.db = mysql.connector.connect(host = "192.168.1.10", user = "webserver", passwd = "5t3w6c4k.5T3W6C4K", database = "snakes")
         self.cursor = self.db.cursor()
 
         if self.mainController.settings.playerMode == 2:

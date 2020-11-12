@@ -79,12 +79,12 @@ class PlayerButtons (RelativeLayout):
                 if self.game.main.settings.playerMode != 2:
                     button.size_hint = (
                         0.1,
-                        ( 1 / self.cols - ( 0.15 / self.cols ) )
+                        ( 1 / self.cols - ( 0.30 / self.cols ) )
                     )
                 else:
                     button.size_hint = (
                         1 / self.cols,
-                        0.06
+                        0.1
                     )
 
                 row = round( ( i / self.cols ) + 0.50001 ) - 1

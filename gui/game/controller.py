@@ -250,10 +250,9 @@ class GameController (RelativeLayout):
             self.infoBar.lbl6.text = "Alive: " + str(self.data.population - self.data.dead) + " / " + str(self.data.population)
         
         if self.type <= 2 or self.type >= 5:
-            txt = "Runde"
+            self.infoBar.lbl5.text = "Runde: " + str(self.data.turn)
         else:
-            txt = "Generation"
-        self.infoBar.lbl5.text = txt + ": " + str(self.data.turn)
+            self.infoBar.lbl5.text = "Generation: " + str(self.data.generation) + "/" + str(self.data.turn)
 
         if self.data.running and self.data.state < 4 and self.data.state > 2:
             self.move()
@@ -400,7 +399,7 @@ class GameController (RelativeLayout):
             self.data.scores.append(self.scores)
 
 
-            if self.data.turn > 1 and self.evolution:
+            if self.data.turn > 2 and self.evolution:
                 self.saveToDb()
 
 
