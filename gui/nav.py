@@ -18,9 +18,9 @@ class GuiNav (Widget):
 
         self.menuBtn = Button(text="Menu", size=(100,40), pos=(10, self.gameApp.mainController.settings.screenY - 50), on_release=self.onShowMenu)
 
-        self.higherSpeedBtn = Button(text="+", id="up", size=(40,40), pos=(120, self.gameApp.mainController.settings.screenY - 50), on_release=self.onChangeSpeed)
+        self.higherSpeedBtn = Button(text="+", size=(40,40), pos=(120, self.gameApp.mainController.settings.screenY - 50), on_release=self.onSpeedUp)
         self.speedLbl = Label(text=str(self.gameApp.mainController.settings.speed), size=(40,40), pos=(170, self.gameApp.mainController.settings.screenY - 50))
-        self.lowerSpeedBtn = Button(text="-", id="down", size=(40,40), pos=(220, self.gameApp.mainController.settings.screenY - 50), on_release=self.onChangeSpeed)
+        self.lowerSpeedBtn = Button(text="-", size=(40,40), pos=(220, self.gameApp.mainController.settings.screenY - 50), on_release=self.onSpeedDown)
 
         self.closeBtn = Button(text="Beenden", size=(100,40), pos=(self.gameApp.mainController.settings.screenX - 110, self.gameApp.mainController.settings.screenY - 50), on_release=self.onClose)
 
@@ -37,14 +37,14 @@ class GuiNav (Widget):
     def onClose (self, a):
         self.gameApp.mainController.stop()
 
-    def onChangeSpeed(self, a):
-        if a.id == "up":
-            self.gameApp.mainController.settings.speed *= 2
-        elif a.id == "down":
-            self.gameApp.mainController.settings.speed /= 2
 
+    def onSpeedUp(self, a):
+        self.gameApp.mainController.settings.speed *= 2
         self.gameApp.modifyClock()
 
+    def onSpeedDown(self, a):
+        self.gameApp.mainController.settings.speed /= 2
+        self.gameApp.modifyClock()
     
     def _keyboard_closed(self):
         self._keyboard.unbind(on_key_down=self._on_keyboard_down)

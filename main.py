@@ -37,7 +37,6 @@ import time
 import sys
 import json
 import socket
-import sqlite3
 
 class MainController (object):
     def __init__ (self):

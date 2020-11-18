@@ -28,6 +28,7 @@ class SubMenu (Widget):
             self.rows = 2
 
         self.playerTypes = []
+        self.slotBtns = []
 
         for i in range(self.menuApp.playerMode):
             self.playerTypes.append(0)
@@ -54,7 +55,6 @@ class SubMenu (Widget):
 
             slotBtn = Button(
                 text="Spieler-Typ " + str(j) + "\n auswählen",
-                id=str(j - 1),
                 pos=(
                     x,
                     y
@@ -63,17 +63,18 @@ class SubMenu (Widget):
                     ( 300 / self.cols ),
                     ( 190 / self.rows )
                 ),
-                on_press=self.onSlotBtn
+                on_press=lambda *args: self.onSlotBtn(i)
             )
 
+            self.slotBtns.append(slotBtn)
             self.add_widget(slotBtn)
 
-    def onSlotBtn(self, a):
-        self.slotMenu = SlotMenu(self, a)
+    def onSlotBtn(self, value):
+        self.slotMenu = SlotMenu(self, value)
         self.add_widget(self.slotMenu)
 
-    def selectPlayerType(self, playerType, slotBtn):
-        slotBtn.text = playerType.text
-        self.playerTypes[int(slotBtn.id)] = int(playerType.id)
+    def selectPlayerType(self, playerType, playerTypeText, slot):
+        self.slotBtns[slot].text = playerTypeText
+        self.playerTypes[slot] = playerType
         self.menuApp.updatePlayerTypes()
         self.remove_widget(self.slotMenu)

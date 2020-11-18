@@ -42,7 +42,7 @@ class GameController (RelativeLayout):
         self.type = self.main.settings.playerTypes[self.instance - 1]
 
         # get best from database
-        self.bestQuery = "SELECT highscore FROM highscores WHERE playerType = " + str(self.type)
+        self.bestQuery = "SELECT highscore FROM highscores WHERE player_type = " + str(self.type)
 
 
         self.x = 0 # smallest coord of game on window
@@ -391,7 +391,7 @@ class GameController (RelativeLayout):
 
             if self.data.best < highscore:
                 self.data.best = highscore
-                query = "UPDATE highscores SET highscore = " + str(highscore) + " WHERE playerType = " + str(self.type)
+                query = "UPDATE highscores SET highscore = " + str(highscore) + " WHERE player_type = " + str(self.type)
                 self.main.gameApp.cursor.execute(query)
                 self.main.gameApp.db.commit()
 

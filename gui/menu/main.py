@@ -10,14 +10,20 @@ class MainMenu (Widget):
 
         self.menuApp = menuApp
 
-        self.pBtn = Button(text="Einzelspieler", id="1", pos=(50, 190), size=(300, 50), on_press=self.onSelectMode)
-        self.ppBtn = Button(text="2 Spieler", id="2", pos=(50, 120), size=(300, 50), on_press=self.onSelectMode)
-        self.ppppBtn = Button(text="4 Spieler", id="4", pos=(50, 50), size=(300, 50), on_press=self.onSelectMode)
+        self.pBtn = Button(text="Einzelspieler", pos=(50, 190), size=(300, 50), on_press=self.onSelectSingle)
+        self.ppBtn = Button(text="2 Spieler", pos=(50, 120), size=(300, 50), on_press=self.onSelectTwo)
+        self.ppppBtn = Button(text="4 Spieler", pos=(50, 50), size=(300, 50), on_press=self.onSelectFour)
 
 
         self.add_widget(self.pBtn)
         self.add_widget(self.ppBtn)
         self.add_widget(self.ppppBtn)
 
-    def onSelectMode(self, btn):
-        self.menuApp.showSubMenu(int(btn.id))
+    def onSelectSingle(self, btn):
+        self.menuApp.showSubMenu(1)
+
+    def onSelectTwo(self, btn):
+        self.menuApp.showSubMenu(2)
+
+    def onSelectFour(self, btn):
+        self.menuApp.showSubMenu(4)
