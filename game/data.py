@@ -72,6 +72,14 @@ class Data (object):
         self.fitnesses = []
         self.scores = []
 
+        self.fitnessMax = []
+        self.fitnessMin = []
+        self.fitnessAvarage = []
+
+        self.scoreMax = []
+        self.scoreMin = []
+        self.scoreAvarage = []
+
     def setSettings (self, highscore, epochs, batch, iterations, eta, generation, population, startSize, fitnesses, scores):
 
         self.highscore = highscore

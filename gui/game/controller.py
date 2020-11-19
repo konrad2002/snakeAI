@@ -351,6 +351,9 @@ class GameController (RelativeLayout):
             highscore = 0
             lowscore = 100
 
+            fitnessSum = 0
+            scoreSum = 0
+
 
             # count highscore, collect weights and store fitnesses
             for snake in self.data.snakes:
@@ -364,11 +367,18 @@ class GameController (RelativeLayout):
                 snake.fitness = (scoreAdd * 10000000 ) / ( snake.steps ) / 100000
 
 
+                #sum up for avarage
+                fitnessSum += snake.fitness
+                scoreSum += len(snake.body)
+
+
                 if snake.fitness > self.data.bestFitness:
                     self.data.bestSnake = snake
+                    self.data.bestFitness = snake.fitness
 
                 if snake.fitness < self.data.worstFitness:
                     self.data.worstSnake = snake
+                    self.data.worstFitness = snake.fitness
 
                 # snake.fitness = snake.steps
 
@@ -385,6 +395,16 @@ class GameController (RelativeLayout):
 
                 if snake.fitness > self.fitness:
                     self.fitness = snake.fitness
+
+            self.data.fitnessAvarage = fitnessSum / len(self.data.snakes)
+            self.data.scoreAvarage = scoreSum / len(self.data.snakes)
+
+            self.data.fitnessMax.append(self.data.bestFitness)
+            self.data.fitnessMin.append(self.data.worstFitness)
+
+            self.data.scoreMax.append(highscore)
+            self.data.scoreMin.append(lowscore)
+                
 
             if self.data.highscore < highscore:
                 self.data.highscore = highscore
