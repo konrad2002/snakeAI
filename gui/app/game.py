@@ -26,7 +26,7 @@ class GameApp (App):
 
         self.games = []
 
-        self.db = pymysql.connect(host = "192.168.1.10", user = "webserver", passwd = "5t3w6c4k", db = "snake")
+        self.db = pymysql.connect(host = "logilutions.de", user = "webserver", passwd = "5t3w6c4k", db = "snake")
         self.cursor = self.db.cursor()
 
         if self.mainController.settings.playerMode == 2:
