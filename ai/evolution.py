@@ -16,10 +16,13 @@ class Evolution (object):
             - doMutation(self)
     '''
 
-    def __init__ (self, **kwargs):
+    def __init__ (self, mutationRate, **kwargs):
         super(Evolution, self).__init__(**kwargs)
         print("[evol] created " + str(self.__class__))
 
+        self.mutationList = [True]
+        for _ in range(mutationRate):
+            self.mutationList.append(False)
 
         self.lastGeneration = Generation()
         self.newGeneration = Generation()
@@ -76,8 +79,6 @@ class Evolution (object):
     def doMutation(self):
         print("mutating...")
 
-        reproduction = [True, False, False, False, False, False, False, False, False, False]
-
         weightLayers = len(self.newGeneration.weights)
 
         self.tempNewWeights = []
@@ -101,7 +102,7 @@ class Evolution (object):
                 for k,pre in enumerate(layer):
                     for l,value in enumerate(pre):
 
-                        changeWeight = random.choice(reproduction)
+                        changeWeight = random.choice(self.mutationList)
                         # changeWeight = True
                         if changeWeight:
                             r = random.randint(-100, 100)
