@@ -38,7 +38,7 @@ class Data (object):
         self.generation = 1
         self.population = 1
 
-        self.mutationRate = 4
+        self.mutationRate = 1
 
 
         self.tempPopulation = 1

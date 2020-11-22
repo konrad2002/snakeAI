@@ -312,7 +312,7 @@ class GameController (RelativeLayout):
 
                 # if to long without eating (to prevent infinity)
 
-                if ( snake.steps / ( len(snake.body) - self.data.startSize + 1 ) ) > 500:
+                if ( snake.steps / ( len(snake.body) - self.data.startSize + 1 ) ) > 200:
                     snake.die()
 
                 for i,tile in enumerate(snake.body):
@@ -364,7 +364,7 @@ class GameController (RelativeLayout):
                     lowscore = len(snake.body)
 
                 scoreAdd = (len(snake.body) - self.data.startSize)
-                snake.fitness = (scoreAdd * 10000000 ) / ( snake.steps ) / 100000
+                snake.fitness = scoreAdd
 
 
                 #sum up for avarage
@@ -480,10 +480,10 @@ class GameController (RelativeLayout):
 
         if db_id == 0:
 
-            query = "INSERT INTO `snakes` (snake_id, player_type, highscore, best_weights, best_fitness, worst_weights, worst_fitness, fitness_max, fitness_min, fitness_avarage, score_max, score_min, score_avarage, generations, population, iterations, eta, epochs, batch, start_size, fitness_function_id, mutation_rate, activation_functions, output_functions) VALUES (" + str(self.data.snakeId) + ", " + str(self.type) + ", " + str(self.data.highscore) + ", \"" + str(self.data.bestSnake.weights) + "\", " + str(self.data.bestSnake.fitness) + ", \"" + str(self.data.worstSnake.weights) + "\", " + str(self.data.worstSnake.fitness) + ", \"" + str(self.data.fitnessMax) + "\", \"" + str(self.data.fitnessMin) + "\", \"" + str(self.data.fitnessAvarage) + "\", \"" + str(self.data.scoreMax) + "\", \"" + str(self.data.scoreMin) + "\", \"" + str(self.data.scoreAvarage) + "\", " + str(self.data.generation) + ", " + str(self.data.population) + ", " + str(self.data.iterations) + ", " + str(self.data.eta) + ", " + str(self.data.epochs) + ", " + str(self.data.batch) + ", " + str(self.data.startSize) + ", " + str(1) + ", " + str(self.data.mutationRate) + ", \"" + str(self.data.snakes[0].ai.activationF) + "\", \"" + str(self.data.snakes[0].ai.outputF) + "\");"
+            query = "INSERT INTO `snakes` (snake_id, player_type, highscore, best_weights, best_fitness, worst_weights, worst_fitness, fitness_max, fitness_min, fitness_avarage, score_max, score_min, score_avarage, generations, population, iterations, eta, epochs, batch, start_size, fitness_function_id, mutation_rate, activation_functions, output_functions) VALUES (" + str(self.data.snakeId) + ", " + str(self.type) + ", " + str(self.data.highscore) + ", \"" + str(self.data.bestSnake.weights) + "\", " + str(self.data.bestSnake.fitness) + ", \"" + str(self.data.worstSnake.weights) + "\", " + str(self.data.worstSnake.fitness) + ", \"" + str(self.data.fitnessMax) + "\", \"" + str(self.data.fitnessMin) + "\", \"" + str(self.data.fitnessAvarage) + "\", \"" + str(self.data.scoreMax) + "\", \"" + str(self.data.scoreMin) + "\", \"" + str(self.data.scoreAvarage) + "\", " + str(self.data.generation) + ", " + str(self.data.population) + ", " + str(self.data.iterations) + ", " + str(self.data.eta) + ", " + str(self.data.epochs) + ", " + str(self.data.batch) + ", " + str(self.data.startSize) + ", " + str(2) + ", " + str(self.data.mutationRate) + ", \"" + str(self.data.snakes[0].ai.activationF) + "\", \"" + str(self.data.snakes[0].ai.outputF) + "\");"
 
         else:
-            query = "UPDATE `snakes` SET player_type = " + str(self.type) + ", highscore = " + str(self.data.highscore) + ", best_weights = \"" + str(self.data.snakes[0].weights) + "\", best_fitness = " + str(self.data.snakes[0].fitness) + ", worst_weights = \"" + str(self.data.snakes[0].weights) + "\", worst_fitness = " + str(self.data.snakes[0].fitness) + ", fitness_max = \"" + str(self.data.fitnessMax) + "\", fitness_min = \"" + str(self.data.fitnessMin) + "\", fitness_avarage = \"" + str(self.data.fitnessAvarage) + "\", score_max = \"" + str(self.data.scoreMax) + "\", score_min = \"" + str(self.data.scoreMin) + "\", score_avarage = \"" + str(self.data.scoreAvarage) + "\", generations = " + str(self.data.generation) + ", population = " + str(self.data.population) + ", iterations = " + str(self.data.iterations) + ", eta = " + str(self.data.eta) + ", epochs = " + str(self.data.epochs) + ", batch = " + str(self.data.batch) + ", start_size = " + str(self.data.startSize) + ", fitness_function_id = " + str(1) + ", activation_functions = \"" + str(self.data.snakes[0].ai.activationF) + "\", output_functions = \"" + str(self.data.snakes[0].ai.outputF) + "\" WHERE snake_id = \"" + str(self.data.snakeId) + "\";"
+            query = "UPDATE `snakes` SET player_type = " + str(self.type) + ", highscore = " + str(self.data.highscore) + ", best_weights = \"" + str(self.data.snakes[0].weights) + "\", best_fitness = " + str(self.data.snakes[0].fitness) + ", worst_weights = \"" + str(self.data.snakes[0].weights) + "\", worst_fitness = " + str(self.data.snakes[0].fitness) + ", fitness_max = \"" + str(self.data.fitnessMax) + "\", fitness_min = \"" + str(self.data.fitnessMin) + "\", fitness_avarage = \"" + str(self.data.fitnessAvarage) + "\", score_max = \"" + str(self.data.scoreMax) + "\", score_min = \"" + str(self.data.scoreMin) + "\", score_avarage = \"" + str(self.data.scoreAvarage) + "\", generations = " + str(self.data.generation) + ", population = " + str(self.data.population) + ", iterations = " + str(self.data.iterations) + ", eta = " + str(self.data.eta) + ", epochs = " + str(self.data.epochs) + ", batch = " + str(self.data.batch) + ", start_size = " + str(self.data.startSize) + ", fitness_function_id = " + str(2) + ", activation_functions = \"" + str(self.data.snakes[0].ai.activationF) + "\", output_functions = \"" + str(self.data.snakes[0].ai.outputF) + "\" WHERE snake_id = \"" + str(self.data.snakeId) + "\";"
 
         self.main.gameApp.cursor.execute(query)
         self.main.gameApp.db.commit()
