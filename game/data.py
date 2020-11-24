@@ -26,6 +26,8 @@ class Data (object):
         # highscore of all snakes with these type
         self.best = 0
 
+        self.showCovers = False
+
         # KNN (Perceptron) settings
         self.epochs = 1
         self.batch = 1

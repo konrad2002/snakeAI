@@ -76,6 +76,17 @@ class AiButtons (RelativeLayout):
                 on_release = self.toggleEvolution
             )
 
+            self.setCovers = Button(
+                text = "covers: disabled",
+                # pos = (0 , 0),
+                # size_hint = (.1, .1),
+                on_release = self.toggleCovers
+            )
+
+            
+            if self.game.type == 2 or self.game.type == 4:
+                self.setCovers.text = "covers: enabled"
+
             self.saveDbButton = Button(
                 text = "save2Db",
                 # pos = (0 , 0),
@@ -88,6 +99,7 @@ class AiButtons (RelativeLayout):
             self.buttons.append(self.randomSnake)
             self.buttons.append(self.showAiVis)
             self.buttons.append(self.setEvolution)
+            self.buttons.append(self.setCovers)
             self.buttons.append(self.saveDbButton)
 
             self.add_widget(self.populationInput)
@@ -95,6 +107,7 @@ class AiButtons (RelativeLayout):
             self.add_widget(self.randomSnake)
             self.add_widget(self.showAiVis)
             self.add_widget(self.setEvolution)
+            self.add_widget(self.setCovers)
             self.add_widget(self.saveDbButton)
 
 
@@ -150,6 +163,18 @@ class AiButtons (RelativeLayout):
             self.game.data.doEvolution = False
             btn.text = "evolution: disabled"
             print("disabled evolution")
+
+
+    def toggleCovers(self, btn):
+
+        if "disabled" in btn.text:
+            self.game.data.showCovers = True
+            btn.text = "covers: enabled"
+            print("enabled covers")
+        elif "enabled" in btn.text:
+            self.game.data.showCovers = False
+            btn.text = "covers: disabled"
+            print("disabled covers")
 
 
     def saveToDb(self, a):

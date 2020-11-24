@@ -37,10 +37,18 @@ class GameMap (RelativeLayout):
 
             if self.game.type == 2 or self.game.type == 4:
                 Color(0,0,0,1)
-                self.hideBox1 = Rectangle(pos=(9 * self.pixel, 9 * self.pixel), size=(23 * self.pixel, 15 * self.pixel))
-                self.hideBox2 = Rectangle(pos=(0, 9 * self.pixel), size=(8 * self.pixel, 15 * self.pixel))
-                self.hideBox3 = Rectangle(pos=(0, 0), size=(8 * self.pixel, 8 * self.pixel))
-                self.hideBox4 = Rectangle(pos=(9 * self.pixel, 0), size=(23 * self.pixel, 8 * self.pixel))
+
+                if self.game.data.showCovers:
+                    self.hideBox1 = Rectangle(pos=(9 * self.pixel, 9 * self.pixel), size=(23 * self.pixel, 15 * self.pixel))
+                    self.hideBox2 = Rectangle(pos=(0, 9 * self.pixel), size=(8 * self.pixel, 15 * self.pixel))
+                    self.hideBox3 = Rectangle(pos=(0, 0), size=(8 * self.pixel, 8 * self.pixel))
+                    self.hideBox4 = Rectangle(pos=(9 * self.pixel, 0), size=(23 * self.pixel, 8 * self.pixel))
+                else:
+                    self.hideBox1 = Rectangle(pos=(0, 0), size=(0, 0))
+                    self.hideBox2 = Rectangle(pos=(0, 0), size=(0, 0))
+                    self.hideBox3 = Rectangle(pos=(0, 0), size=(0, 0))
+                    self.hideBox4 = Rectangle(pos=(0, 0), size=(0, 0))
+
                 Color(1,1,1,1)
 
 
@@ -116,41 +124,48 @@ class GameMap (RelativeLayout):
             )
 
             if self.game.type == 2 or self.game.type == 4:
-                self.hideBox1.pos = (
-                    ( self.game.data.displayedSnake.body[0].x + 1 ) * self.pixel,
-                    ( self.game.data.displayedSnake.body[0].y + 1 ) * self.pixel
-                )
-                self.hideBox1.size = (
-                    ( 31 - self.game.data.displayedSnake.body[0].x ) * self.pixel,
-                    ( 23 - self.game.data.displayedSnake.body[0].y ) * self.pixel
-                )
-                
-                self.hideBox2.pos = (
-                    0,
-                    ( self.game.data.displayedSnake.body[0].y + 1 ) * self.pixel
-                )
-                self.hideBox2.size = (
-                    self.game.data.displayedSnake.body[0].x * self.pixel,
-                    ( 23 - self.game.data.displayedSnake.body[0].y ) * self.pixel
-                )
+                if self.game.data.showCovers:
+                    self.hideBox1.pos = (
+                        ( self.game.data.displayedSnake.body[0].x + 1 ) * self.pixel,
+                        ( self.game.data.displayedSnake.body[0].y + 1 ) * self.pixel
+                    )
+                    self.hideBox1.size = (
+                        ( 31 - self.game.data.displayedSnake.body[0].x ) * self.pixel,
+                        ( 23 - self.game.data.displayedSnake.body[0].y ) * self.pixel
+                    )
+                    
+                    self.hideBox2.pos = (
+                        0,
+                        ( self.game.data.displayedSnake.body[0].y + 1 ) * self.pixel
+                    )
+                    self.hideBox2.size = (
+                        self.game.data.displayedSnake.body[0].x * self.pixel,
+                        ( 23 - self.game.data.displayedSnake.body[0].y ) * self.pixel
+                    )
 
-                self.hideBox3.pos = (
-                    0,
-                    0
-                )
-                self.hideBox3.size = (
-                    self.game.data.displayedSnake.body[0].x * self.pixel,
-                    self.game.data.displayedSnake.body[0].y * self.pixel
-                )
+                    self.hideBox3.pos = (
+                        0,
+                        0
+                    )
+                    self.hideBox3.size = (
+                        self.game.data.displayedSnake.body[0].x * self.pixel,
+                        self.game.data.displayedSnake.body[0].y * self.pixel
+                    )
 
-                self.hideBox4.pos = (
-                    ( self.game.data.displayedSnake.body[0].x + 1 ) * self.pixel,
-                    0
-                )
-                self.hideBox4.size = (
-                    ( 31 - self.game.data.displayedSnake.body[0].x ) * self.pixel,
-                    self.game.data.displayedSnake.body[0].y * self.pixel
-                )
+                    self.hideBox4.pos = (
+                        ( self.game.data.displayedSnake.body[0].x + 1 ) * self.pixel,
+                        0
+                    )
+                    self.hideBox4.size = (
+                        ( 31 - self.game.data.displayedSnake.body[0].x ) * self.pixel,
+                        self.game.data.displayedSnake.body[0].y * self.pixel
+                    )
+
+                else:
+                    self.hideBox1.size = (0,0)
+                    self.hideBox2.size = (0,0)
+                    self.hideBox3.size = (0,0)
+                    self.hideBox4.size = (0,0)
 
 
 

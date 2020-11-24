@@ -83,6 +83,10 @@ class GameController (RelativeLayout):
         if self.type == 3 or self.type == 4:
             self.evolution = Evolution(self.data.mutationRate, self.data.reproductionRate)
 
+            
+        if self.type == 2 or self.type == 4:
+            self.data.showCovers = False
+
 
         self.drawBorder()
         self.showMap()
