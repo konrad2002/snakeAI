@@ -81,7 +81,7 @@ class GameController (RelativeLayout):
         # init evolutional behavior object
         self.evolution = None
         if self.type == 3 or self.type == 4:
-            self.evolution = Evolution(self.data.mutationRate)
+            self.evolution = Evolution(self.data.mutationRate, self.data.reproductionRate)
 
 
         self.drawBorder()

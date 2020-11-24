@@ -16,13 +16,15 @@ class Evolution (object):
             - doMutation(self)
     '''
 
-    def __init__ (self, mutationRate, **kwargs):
+    def __init__ (self, mutationRate, reproductionRate, **kwargs):
         super(Evolution, self).__init__(**kwargs)
         print("[evol] created " + str(self.__class__))
 
         self.mutationList = [True]
         for _ in range(mutationRate):
             self.mutationList.append(False)
+
+        self.reproductionRate = reproductionRate
 
         self.lastGeneration = Generation()
         self.newGeneration = Generation()
@@ -45,7 +47,9 @@ class Evolution (object):
     def generatePopulation(self, size):
 
         # calculate probability of each snake
-        self.probability = np.divide(self.lastGeneration.fitnesses, sum(self.lastGeneration.fitnesses) + 0.000000001)
+        self.poweredFitnesses = np.power(self.lastGeneration.fitnesses, self.reproductionRate)
+
+        self.probability = np.divide(self.poweredFitnesses, sum(self.poweredFitnesses) + 0.000000001)
         self.probability = np.multiply(self.probability, 100)
         # for i,p in enumerate(self.probability):
         #     print(str(self.lastGeneration.fitnesses[i]) + " => " + str(p))
