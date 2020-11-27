@@ -133,6 +133,9 @@ class AiAnnExample (object):
         return newDirection
 
 
+
+
+
     def printNetwork(self):
 
         print("weights")
