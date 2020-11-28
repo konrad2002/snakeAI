@@ -2,6 +2,7 @@
 
 from gui.nav import GuiNav
 from gui.game.controller import GameController
+from gui.app.database import Database
 
 from kivy.uix.floatlayout import FloatLayout
 
@@ -26,7 +27,7 @@ class GameApp (App):
 
         self.games = []
 
-        self.db = pymysql.connect(host = "logilutions.de", user = "webserver", passwd = "5t3w6c4k", db = "snake")
+        self.db = Database()
         self.cursor = self.db.cursor()
 
         if self.mainController.settings.playerMode == 2:
