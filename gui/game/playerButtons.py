@@ -50,17 +50,15 @@ class PlayerButtons (RelativeLayout):
 
             self.key1Btn = Button(
                 text = "W-A-S-D",
-                id = "1",
                 # pos = (100 , 0),
                 # size_hint = (.1, .1),
-                on_release = self.onSetKeyboard
+                on_release = lambda *args: self.onSetKeyboard(1)
             )
             self.key2Btn = Button(
                 text = "Pfeiltasten",
-                id = "2",
                 # pos = (200 , 0),
                 # size_hint = (.1, .1),
-                on_release = self.onSetKeyboard
+                on_release = lambda *args: self.onSetKeyboard(2)
             )
 
             self.buttons.append(self.key1Btn)
@@ -100,7 +98,7 @@ class PlayerButtons (RelativeLayout):
     def onReady(self, a):
         self.game.ready()
 
-    def onSetKeyboard(self, a):
-        print("[KEYS] set keyboard for " + str(self.game.instance) + " to " + str(a.id))
-        a.color = (0,1,0,1)
-        self.game.setKeyboard(int(a.id))
+    def onSetKeyboard(self, keyType):
+        print("[KEYS] set keyboard for " + str(self.game.instance) + " to " + str(keyType))
+        self.buttons[keyType - 1].color = (0,1,0,1)
+        self.game.setKeyboard(keyType)

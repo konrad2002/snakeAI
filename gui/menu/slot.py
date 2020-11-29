@@ -21,12 +21,12 @@ class SlotMenu (GridLayout):
 
         self.typeBtns = []
 
-        self.type1Btn = Button(text="Spieler normal", size=(120, 100), on_release=lambda *args: self.onSelectType(0))
-        self.type4Btn = Button(text="Spieler Snake", size=(120, 100), on_release=lambda *args: self.onSelectType(3))
-        self.type2Btn = Button(text="KNN normal", size=(120, 100), on_release=lambda *args: self.onSelectType(1))
+        self.type1Btn = Button(text="Spieler normal", size=(120, 100), on_release=lambda *args: self.onSelectType(1))
+        self.type4Btn = Button(text="Spieler Snake", size=(120, 100), on_release=lambda *args: self.onSelectType(2))
+        self.type2Btn = Button(text="KNN normal", size=(120, 100), on_release=lambda *args: self.onSelectType(3))
         self.type5Btn = Button(text="KNN Snake", size=(120, 100), on_release=lambda *args: self.onSelectType(4))
-        self.type3Btn = Button(text="Zufall", size=(120, 100), on_release=lambda *args: self.onSelectType(2))
-        self.type6Btn = Button(text="Algorithmus", size=(120, 100), on_release=lambda *args: self.onSelectType(5))
+        self.type3Btn = Button(text="Zufall", size=(120, 100), on_release=lambda *args: self.onSelectType(5))
+        self.type6Btn = Button(text="Algorithmus", size=(120, 100), on_release=lambda *args: self.onSelectType(6))
 
         self.add_widget(self.type1Btn)
         self.add_widget(self.type2Btn)
@@ -44,4 +44,4 @@ class SlotMenu (GridLayout):
 
     def onSelectType(self, playerType):
         print(str(playerType) + " was selected")
-        self.parentMenu.selectPlayerType(playerType, self.typeBtns[playerType].text, self.slot)
+        self.parentMenu.selectPlayerType(playerType, self.slot)

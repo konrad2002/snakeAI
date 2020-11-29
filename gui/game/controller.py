@@ -83,7 +83,7 @@ class GameController (RelativeLayout):
         if self.type == 3 or self.type == 4:
             self.evolution = Evolution(self.data.mutationRate, self.data.reproductionRate)
 
-            
+
         if self.type == 2 or self.type == 4:
             self.data.showCovers = False
 
@@ -140,7 +140,7 @@ class GameController (RelativeLayout):
         if self.main.settings.playerMode == 2:
             btnX = 0
             btnY = self.sizeY / 15
-            
+
             btnSizeX = self.sizeX
             btnSizeY = self.sizeY - self.sizeY / 15 * 2 - self.mapY - 4
 
@@ -151,8 +151,8 @@ class GameController (RelativeLayout):
 
             btnSizeX = self.sizeX / 3
             btnSizeY = self.mapY
-            
-        
+
+
         if self.type <= 2:
             self.buttons = PlayerButtons(self)
         else:
@@ -205,7 +205,7 @@ class GameController (RelativeLayout):
             if self.data.turn > 1 and self.evolution:
                 newWeights = self.evolution.newGeneration.weights[i]
 
-            snake = Snake(self.data.startSize, self.data.foods, self.type, newWeights)
+            snake = Snake(self.data.startSize, self.data.foods, self.type, newWeights, self.main.gameApp.db)
 
             if self.type % 2 == 0:
                 snake.aiSensor = AiSensor(snake, 1)
@@ -253,7 +253,7 @@ class GameController (RelativeLayout):
             self.infoBar.lbl4.text = "Länge: " + str(len(self.data.displayedSnake.body))
             # self.infoBar.lbl4.text = "Fitness: " + str(round(self.data.fitness, 3))
             self.infoBar.lbl6.text = "Alive: " + str(self.data.population - self.data.dead) + " / " + str(self.data.population)
-        
+
         if self.type <= 2 or self.type >= 5:
             self.infoBar.lbl5.text = "Runde: " + str(self.data.turn)
         else:
@@ -286,7 +286,7 @@ class GameController (RelativeLayout):
 
                 snake.body[0].x = snake.body[1].x
                 snake.body[0].y = snake.body[1].y
-            
+
                 if not ( (snake.direction + 1 ) % 2 == ( snake.newDirection + 1 ) % 2 ):
                     snake.direction = snake.newDirection
 
@@ -299,7 +299,7 @@ class GameController (RelativeLayout):
                 if snake.direction == 3:
                     snake.body[0].x += -1
 
-                
+
                 # if in food
                 if snake.body[0].x == self.data.foods[len(snake.body)].x and snake.body[0].y == self.data.foods[len(snake.body)].y:
                     snake.eat()
@@ -325,6 +325,9 @@ class GameController (RelativeLayout):
                         if snake.body[0].x == tile.x and snake.body[0].y == tile.y:
                             snake.die()
 
+                if self.type == 1 or self.type == 2:
+                    snake.saveStepDb()
+
 
             else:
                 dead += 1
@@ -337,7 +340,7 @@ class GameController (RelativeLayout):
 
 
     def allDeath(self):
-        
+
             self.data.running = False
             self.data.state = 4
             self.buttons.readyBtn.color = (1,0.4,0.4,1)
@@ -392,7 +395,7 @@ class GameController (RelativeLayout):
                     self.fitnesses.append(snake.fitness)
                     self.scores.append(len(snake.body))
                     self.weights.append(snake.ai.weights)
-                	
+
                 # if snake.fitness < self.data.fitness[scoreAdd][0]:
                 #     self.data.fitness[scoreAdd][0] = snake.fitness
                 # if snake.fitness > self.data.fitness[scoreAdd][1]:
@@ -409,7 +412,7 @@ class GameController (RelativeLayout):
 
             self.data.scoreMax.append(highscore)
             self.data.scoreMin.append(lowscore)
-                
+
 
             if self.data.highscore < highscore:
                 self.data.highscore = highscore
@@ -492,5 +495,5 @@ class GameController (RelativeLayout):
         else:
             query = "UPDATE `snakes` SET player_type = " + str(self.type) + ", highscore = " + str(self.data.highscore) + ", best_weights = \"" + str(self.data.snakes[0].weights) + "\", best_fitness = " + str(self.data.snakes[0].fitness) + ", worst_weights = \"" + str(self.data.snakes[0].weights) + "\", worst_fitness = " + str(self.data.snakes[0].fitness) + ", fitness_max = \"" + str(self.data.fitnessMax) + "\", fitness_min = \"" + str(self.data.fitnessMin) + "\", fitness_avarage = \"" + str(self.data.fitnessAvarage) + "\", score_max = \"" + str(self.data.scoreMax) + "\", score_min = \"" + str(self.data.scoreMin) + "\", score_avarage = \"" + str(self.data.scoreAvarage) + "\", generations = " + str(self.data.generation) + ", population = " + str(self.data.population) + ", iterations = " + str(self.data.iterations) + ", eta = " + str(self.data.eta) + ", epochs = " + str(self.data.epochs) + ", batch = " + str(self.data.batch) + ", start_size = " + str(self.data.startSize) + ", fitness_function_id = " + str(2) + ", activation_functions = \"" + str(self.data.snakes[0].ai.activationF) + "\", output_functions = \"" + str(self.data.snakes[0].ai.outputF) + "\", last_update = \"" + str(self.lastUpdate) + "\" WHERE snake_id = \"" + str(self.data.snakeId) + "\";"
 
-        self.main.gameApp.cursor.execute(query)
-        self.main.gameApp.db.commit()
+        self.main.gameApp.db.cursor.execute(query)
+        self.main.gameApp.db.db.commit()

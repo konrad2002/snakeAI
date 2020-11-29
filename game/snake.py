@@ -7,13 +7,15 @@ from ai.rand import RandomDirection
 from ai.algorithm import AlgorithmDirection
 
 class Snake (object):
-    def __init__ (self, startSize, foods, gameType, weights):
+    def __init__ (self, startSize, foods, gameType, weights, database):
 
         self.body = []
         self.foods = foods
         self.gameType = gameType
 
         self.weights = weights
+
+        self.db = database
 
         self.startSize = startSize
 
@@ -57,3 +59,11 @@ class Snake (object):
 
     def die(self):
         self.death = True
+
+
+    def saveStepDb(self):
+
+        query = "INSERT INTO user_steps (inputs, direction) VALUES (\"" + str(self.aiSensor.data) + "\", \"" + str(self.newDirection) + "\")"
+
+        self.db.cursor.execute(query)
+        self.db.db.commit()

@@ -28,7 +28,7 @@ class GameApp (App):
         self.games = []
 
         self.db = Database()
-        self.cursor = self.db.cursor()
+        self.cursor = self.db.cursor
 
         if self.mainController.settings.playerMode == 2:
             self.layoutType = 2

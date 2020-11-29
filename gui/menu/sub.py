@@ -73,8 +73,8 @@ class SubMenu (Widget):
         self.slotMenu = SlotMenu(self, value)
         self.add_widget(self.slotMenu)
 
-    def selectPlayerType(self, playerType, playerTypeText, slot):
-        self.slotBtns[slot].text = playerTypeText
+    def selectPlayerType(self, playerType, slot):
+        self.slotBtns[slot].text = self.menuApp.mainController.settings.typeNames[playerType - 1]
         self.playerTypes[slot] = playerType
         self.menuApp.updatePlayerTypes()
         self.remove_widget(self.slotMenu)
