@@ -30,9 +30,11 @@ class Data (object):
 
         # KNN (Perceptron) settings
         self.epochs = 1
-        self.batch = 1
+        self.batch = 5
         self.iterations = 1
         self.eta = 0.1
+
+        self.weights = []
 
         # Evolutional Algorithm settings
         self.doEvolution = False

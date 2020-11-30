@@ -94,6 +94,13 @@ class AiButtons (RelativeLayout):
                 on_release = self.saveToDb
             )
 
+            self.fitAnnBtn = Button(
+                text = "KNN Trainieren",
+                # pos = (0 , 0),
+                # size_hint = (.1, .1),
+                on_release = self.fitAnn
+            )
+
             self.buttons.append(self.populationInput)
             self.buttons.append(self.create100)
             self.buttons.append(self.randomSnake)
@@ -101,6 +108,7 @@ class AiButtons (RelativeLayout):
             self.buttons.append(self.setEvolution)
             self.buttons.append(self.setCovers)
             self.buttons.append(self.saveDbButton)
+            self.buttons.append(self.fitAnnBtn)
 
             self.add_widget(self.populationInput)
             self.add_widget(self.create100)
@@ -109,6 +117,7 @@ class AiButtons (RelativeLayout):
             self.add_widget(self.setEvolution)
             self.add_widget(self.setCovers)
             self.add_widget(self.saveDbButton)
+            self.add_widget(self.fitAnnBtn)
 
 
             # calculation of button positions and size (depending on number of buttons)
@@ -179,3 +188,6 @@ class AiButtons (RelativeLayout):
 
     def saveToDb(self, a):
         self.game.saveToDb()
+
+    def fitAnn(self, a):
+        self.game.fitAnn()

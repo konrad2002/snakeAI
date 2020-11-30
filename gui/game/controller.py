@@ -27,6 +27,7 @@ from kivy.uix.floatlayout import FloatLayout
 
 import random
 import time
+import json
 
 
 class GameController (RelativeLayout):
@@ -497,3 +498,41 @@ class GameController (RelativeLayout):
 
         self.main.gameApp.db.cursor.execute(query)
         self.main.gameApp.db.db.commit()
+
+
+
+    def fitAnn(self):
+
+        print("fit ann")
+        
+        query = "SELECT inputs, direction FROM user_steps LIMIT " + str(self.data.batch)
+        
+        self.main.gameApp.db.cursor.execute(query)
+        rows = self.main.gameApp.db.cursor.fetchall()
+
+        self.inputs = []
+        self.directions = []
+        for row in rows:
+            _inputs = json.loads(row[0])
+            _layer = [1]
+            for _input in _inputs:
+                for _value in _input:
+                    _layer.append(_value)
+            self.inputs.append(_layer)
+
+            _output = row[1]
+            
+            if _output == 0:
+                y = [0, 1, 0, 0, 0]
+            if _output == 1:
+                y = [0, 0, 1, 0, 0]
+            if _output == 2:
+                y = [0, 0, 0, 1, 0]
+            if _output == 3:
+                y = [0, 0, 0, 0, 1]
+
+            self.directions.append(y)
+
+        print(self.inputs)
+
+        self.data.weights = self.data.displayedSnake.ai.fit(self.data.iterations, self.data.eta, self.inputs, self.directions)

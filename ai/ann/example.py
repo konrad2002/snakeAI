@@ -1,8 +1,10 @@
 # example code for a neural network
 
+from sklearn.utils.validation import check_random_state
+
 import numpy as np
 import random
-from sklearn.utils.validation import check_random_state
+import copy
 
 class AiAnnExample (object):
     def __init__ (  self,
@@ -22,8 +24,6 @@ class AiAnnExample (object):
         # self.randomInt = random.randint(10, 50)
         # self.random_state_ = check_random_state(self.randomInt)
 
-
-        self.network = []
         self.layers = []
         self.weights = []
 
@@ -133,7 +133,43 @@ class AiAnnExample (object):
         return newDirection
 
 
+    def fit(self, iterations, eta, X, Y):
+        print("starting fitting algorithm...")
 
+        print("------")
+        print("Inputs:")
+        print(X)
+        print("------")
+        print("Outputs:")
+        print(Y)
+        print("------")
+
+        for iteration in range(iterations):
+            error = 0.0
+
+            print(iteration)
+
+
+            for x,y in zip(X, Y):
+                yCalc = self.predict(x)
+
+                diff = y - yCalc
+
+                # square with numpy because of vectors in diff
+                error += 0.5 * np.sum(diff * diff)
+
+                self.network[4][:,4] = self.network[4][:,3] * diff
+                self.network[2][:,4] = self.network[2][:,3] * np.dot(self.network[3][:].T, self.network[4][:,4])
+
+                deltaWjk = self.eta * np.outer(self.network[4][:,4], self.network[2][:,2].T)
+                detlaWij = self.eta * np.outer(self.network[2][:,4], self.network[0][:,2].T)
+
+                self.network[1][:,:] += detlaWij
+                self.network[3][:,:] += deltaWjk
+                
+            self.errors.append(error)
+
+        print(self.errors)
 
 
     def printNetwork(self):
