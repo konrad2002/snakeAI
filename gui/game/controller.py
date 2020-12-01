@@ -514,7 +514,7 @@ class GameController (RelativeLayout):
         self.directions = []
         for row in rows:
             _inputs = json.loads(row[0])
-            _layer = [1]
+            _layer = []
             for _input in _inputs:
                 for _value in _input:
                     _layer.append(_value)
@@ -523,16 +523,21 @@ class GameController (RelativeLayout):
             _output = row[1]
             
             if _output == 0:
-                y = [0, 1, 0, 0, 0]
+                y = [1, 1, 0, 0, 0] # bias must be 1, else it would be trained every time
             if _output == 1:
-                y = [0, 0, 1, 0, 0]
+                y = [1, 0, 1, 0, 0]
             if _output == 2:
-                y = [0, 0, 0, 1, 0]
+                y = [1, 0, 0, 1, 0]
             if _output == 3:
-                y = [0, 0, 0, 0, 1]
+                y = [1, 0, 0, 0, 1]
 
             self.directions.append(y)
 
         print(self.inputs)
 
-        self.data.weights = self.data.displayedSnake.ai.fit(self.data.iterations, self.data.eta, self.inputs, self.directions)
+        self.data.weights = self.data.displayedSnake.ai.fit(self.data.iterations, self.data.eta, self.inputs, self.directions, self.aiVis.update)
+
+        print(self.data.weights)
+
+        for snake in self.data.snakes:
+            snake.ai.weights = self.data.weights

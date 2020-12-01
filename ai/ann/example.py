@@ -133,7 +133,12 @@ class AiAnnExample (object):
         return newDirection
 
 
-    def fit(self, iterations, eta, X, Y):
+    # fitting function: uses backpropagation algorithm
+    def fit(self, iterations, eta, X, Y, updateVis):
+
+        self.eta = eta
+        self.updateVis = updateVis
+
         print("starting fitting algorithm...")
 
         print("------")
@@ -143,6 +148,8 @@ class AiAnnExample (object):
         print("Outputs:")
         print(Y)
         print("------")
+
+        self.errors = []
 
         for iteration in range(iterations):
             error = 0.0
@@ -158,18 +165,56 @@ class AiAnnExample (object):
                 # square with numpy because of vectors in diff
                 error += 0.5 * np.sum(diff * diff)
 
-                self.network[4][:,4] = self.network[4][:,3] * diff
-                self.network[2][:,4] = self.network[2][:,3] * np.dot(self.network[3][:].T, self.network[4][:,4])
+                print(self.layers[0])
+                print("")
+                print("-----")
+                print("")
+                print(self.layers[1])
+                print("")
+                print("-----")
+                print("")
+                print(y)
+                print("")
+                print(yCalc)
+                print("")
+                print(diff)
+                print("")
 
-                deltaWjk = self.eta * np.outer(self.network[4][:,4], self.network[2][:,2].T)
-                detlaWij = self.eta * np.outer(self.network[2][:,4], self.network[0][:,2].T)
+                print("")
+                print("-----")
+                print("")
+                
+                print(self.weights[1][:].T)
 
-                self.network[1][:,:] += detlaWij
-                self.network[3][:,:] += deltaWjk
+                print("")
+                print("-----")
+                print("")
+                
+                print(self.weights[1][:])
+
+                print("")
+                print("-----")
+                print("")
+
+                print(self.layers[2][:,4])
+
+                self.layers[2][:,4] = self.layers[2][:,3] * diff
+                self.dot = np.dot(self.weights[1][:], self.layers[2][:,4])
+                self.layers[1][:,4] = np.multiply(self.layers[1][:,3], self.dot)
+
+                deltaWjk = self.eta * np.outer(self.layers[2][:,4], self.layers[1][:,2].T)
+                detlaWij = self.eta * np.outer(self.layers[1][:,4], self.layers[0][:,2].T)
+
+                self.weights[0][:,:] += detlaWij.T
+                self.weights[1][:,:] += deltaWjk.T
+
+                self.updateVis()
                 
             self.errors.append(error)
 
         print(self.errors)
+
+        return self.weights
 
 
     def printNetwork(self):
