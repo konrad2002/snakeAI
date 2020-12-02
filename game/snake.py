@@ -69,3 +69,5 @@ class Snake (object):
 
             self.db.cursor.execute(query)
             self.db.db.commit()
+
+        print("steps saved!")
