@@ -2,6 +2,11 @@
 
 import numpy as np
 
+a = [0.999999, 0.999999, 0.999999, 2.999999]
+b = [0.999999, 0.999999, 3.999999, 2.999999]
+
+print(np.multiply(a, b))
+
 test = ["test1", "test2", "test3"]
 
 print(test)

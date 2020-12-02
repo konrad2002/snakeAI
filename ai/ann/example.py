@@ -1,6 +1,6 @@
 # example code for a neural network
 
-from sklearn.utils.validation import check_random_state
+# from sklearn.utils.validation import check_random_state
 
 import numpy as np
 import random
@@ -99,6 +99,8 @@ class AiAnnExample (object):
 
                 layer[1:,2] = self.function(self.outputF[i - 1], layer[1:,1])
 
+                layer[1:,3] = layer[1:,2] * ( 1.0 - layer[1:,2])
+
         output = self.layers[len(self.nNeurons) - 1][:,2]
 
         return output
@@ -165,40 +167,50 @@ class AiAnnExample (object):
                 # square with numpy because of vectors in diff
                 error += 0.5 * np.sum(diff * diff)
 
-                print(self.layers[0])
-                print("")
-                print("-----")
-                print("")
-                print(self.layers[1])
-                print("")
-                print("-----")
-                print("")
-                print(y)
-                print("")
-                print(yCalc)
-                print("")
-                print(diff)
-                print("")
+                # print(self.layers[0])
+                # print("")
+                # print("-----")
+                # print("")
+                # print(self.layers[1])
+                # print("")
+                # print("-----")
+                # print("")
+                # print(y)
+                # print("")
+                # print(yCalc)
+                # print("")
+                # print(diff)
+                # print("")
 
-                print("")
-                print("-----")
-                print("")
+                # print("")
+                # print("-----")
+                # print("")
                 
-                print(self.weights[1][:].T)
+                # print(self.weights[1][:].T)
 
-                print("")
-                print("-----")
-                print("")
-                
-                print(self.weights[1][:])
+                # print("")
+                # print("-----")
+                # print("")
 
-                print("")
-                print("-----")
-                print("")
+                # print(self.weights[1][:])
 
-                print(self.layers[2][:,4])
+                # print("")
+                # print("-----")
+                # print("")
 
-                self.layers[2][:,4] = self.layers[2][:,3] * diff
+                # print(self.layers[2][:,4])
+
+                # print("")
+                # print("-----")
+                # print(self.layers[2][:,3])
+                # print(" * ")
+                # print(diff)
+                # print(" = ")
+                # print(np.multiply(self.layers[2][:,3], diff))
+                # print("-----")
+                # print("")
+
+                self.layers[2][:,4] = np.multiply(self.layers[2][:,3], diff)
                 self.dot = np.dot(self.weights[1][:], self.layers[2][:,4])
                 self.layers[1][:,4] = np.multiply(self.layers[1][:,3], self.dot)
 
