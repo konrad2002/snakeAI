@@ -327,7 +327,7 @@ class GameController (RelativeLayout):
                             snake.die()
 
                 if self.type == 1 or self.type == 2:
-                    snake.saveStepDb()
+                    snake.stepList.append([snake.aiSensor.data, snake.direction])
 
 
             else:
@@ -374,6 +374,8 @@ class GameController (RelativeLayout):
 
                 scoreAdd = (len(snake.body) - self.data.startSize)
                 snake.fitness = scoreAdd
+
+                snake.saveStepsDb()
 
 
                 #sum up for avarage
@@ -422,7 +424,7 @@ class GameController (RelativeLayout):
                 self.data.best = highscore
                 query = "UPDATE highscores SET highscore = " + str(highscore) + " WHERE player_type = " + str(self.type)
                 self.main.gameApp.cursor.execute(query)
-                self.main.gameApp.db.commit()
+                self.main.gameApp.db.db.commit()
 
             self.data.fitnesses.append(self.fitnesses)
             self.data.scores.append(self.scores)
