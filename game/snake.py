@@ -30,6 +30,7 @@ class Snake (object):
         self.newDirection = 1
 
         self.steps = 0
+        self.stepList = []
         
         self.death = False
 
@@ -61,9 +62,10 @@ class Snake (object):
         self.death = True
 
 
-    def saveStepDb(self):
+    def saveStepsDb(self):
 
-        query = "INSERT INTO user_steps (inputs, direction) VALUES (\"" + str(self.aiSensor.data) + "\", \"" + str(self.newDirection) + "\")"
+        for step in self.stepList:
+            query = "INSERT INTO user_steps (inputs, direction) VALUES (\"" + str(step[0]) + "\", \"" + str(step[1]) + "\")"
 
-        self.db.cursor.execute(query)
-        self.db.db.commit()
+            self.db.cursor.execute(query)
+            self.db.db.commit()
