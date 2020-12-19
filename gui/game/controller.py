@@ -190,7 +190,7 @@ class GameController (RelativeLayout):
             self.data.foods.append(newFood)
 
 
-        if self.data.turn > 1 and self.evolution:
+        if self.data.turn > 1 and self.evolution and self.data.doEvolution:
             self.evolution.generatePopulation(self.data.population)
             self.data.generation += 1
             self.evolution.doMutation()
@@ -203,8 +203,10 @@ class GameController (RelativeLayout):
         for i in range(self.data.population):
 
             newWeights = None
-            if self.data.turn > 1 and self.evolution:
+            if self.data.turn > 1 and self.evolution and self.data.doEvolution:
                 newWeights = self.evolution.newGeneration.weights[i]
+            elif self.data.turn > 1:
+                newWeights = self.weights[i]
 
             snake = Snake(self.data.startSize, self.data.foods, self.type, newWeights, self.main.gameApp.db)
 
@@ -441,7 +443,7 @@ class GameController (RelativeLayout):
 
 
 
-            if self.evolution:
+            if self.evolution and self.data.doEvolution:
                 self.evolution.getFitness(self.fitnesses)
                 self.evolution.getWeights(self.weights)
 
