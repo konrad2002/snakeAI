@@ -163,7 +163,7 @@ class AiAnnExample (object):
 
             for x,y in zip(X, Y):
                 i += 1
-                if i % ( (self.batch * iterations) / 100 ) == 0:
+                if i % round( (self.batch * iterations) / 100 ) == 0:
                     print(str(round( i / ( self.batch * iterations ) * 100)) + "%")
 
                 yCalc = self.predict(x)

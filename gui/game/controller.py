@@ -510,7 +510,7 @@ class GameController (RelativeLayout):
 
         print("fit ann")
         
-        query = "SELECT inputs, direction FROM user_steps LIMIT " + str(self.data.batch)
+        query = "SELECT inputs, direction FROM feature_steps LIMIT " + str(self.data.batch)
         
         self.main.gameApp.db.cursor.execute(query)
         rows = self.main.gameApp.db.cursor.fetchall()
