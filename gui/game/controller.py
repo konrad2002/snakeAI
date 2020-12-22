@@ -353,8 +353,8 @@ class GameController (RelativeLayout):
             self.weights = []
             self.scores = []
 
-            self.data.bestSnake = None
-            self.data.worstSnake = None
+            self.data.bestSnake = self.data.snakes[0]
+            self.data.worstSnake = self.data.snakes[0]
 
             self.data.bestFitness = 0
             self.data.worstFitness = 100
@@ -518,6 +518,8 @@ class GameController (RelativeLayout):
         self.inputs = []
         self.directions = []
         for row in rows:
+
+            print(row)
             _inputs = json.loads(row[0])
             _layer = []
             for _input in _inputs:
