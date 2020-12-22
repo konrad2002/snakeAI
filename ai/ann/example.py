@@ -153,13 +153,19 @@ class AiAnnExample (object):
 
         self.errors = []
 
+        self.batch = len(X)
+
+        i = 0
         for iteration in range(iterations):
             error = 0.0
 
             print(iteration)
 
-
             for x,y in zip(X, Y):
+                i += 1
+                if i % ( (self.batch * iterations) / 100 ) == 0:
+                    print(str(round( i / ( self.batch * iterations ) * 100)) + "%")
+
                 yCalc = self.predict(x)
 
                 diff = y - yCalc

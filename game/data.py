@@ -30,8 +30,8 @@ class Data (object):
 
         # KNN (Perceptron) settings
         self.epochs = 1
-        self.batch = 100
-        self.iterations = 5
+        self.batch = 10000
+        self.iterations = 1
         self.eta = 0.1
 
         self.weights = []
