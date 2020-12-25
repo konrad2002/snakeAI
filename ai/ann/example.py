@@ -1,6 +1,6 @@
 # example code for a neural network
 
-# from sklearn.utils.validation import check_random_state
+from sklearn.utils.validation import check_random_state
 
 import numpy as np
 import random
@@ -21,8 +21,8 @@ class AiAnnExample (object):
         self.activationF = activationF
         self.outputF = outputF
 
-        # self.randomInt = random.randint(10, 50)
-        # self.random_state_ = check_random_state(self.randomInt)
+        self.randomInt = random.randint(10, 50)
+        self.random_state_ = check_random_state(self.randomInt)
 
         self.layers = []
         self.weights = []
@@ -159,12 +159,12 @@ class AiAnnExample (object):
         for iteration in range(iterations):
             error = 0.0
 
-            print(iteration)
+            # print(iteration)
 
             for x,y in zip(X, Y):
                 i += 1
-                if i % round( (self.batch * iterations) / 100 ) == 0:
-                    print(str(round( i / ( self.batch * iterations ) * 100)) + "%")
+                # if i % round( (self.batch * iterations) / 100 ) == 0:
+                #     print(str(round( i / ( self.batch * iterations ) * 100)) + "%")
 
                 yCalc = self.predict(x)
 
@@ -283,18 +283,28 @@ weights.append(
 )
 
 
-ai = AiAnnExample([2, 1], weights=weights, activationF=["heaviside","heaviside"], outputF=["id", "id"])
+ai = AiAnnExample([2, 2, 1], weights=None, activationF=["heaviside","heaviside","heaviside"], outputF=["id","id", "id"])
 ai.printNetwork()
 
 X = [[0, 0], [0, 1], [1, 0], [1, 1]]
-for x in X:
-    output = ai.predict(x)
+# for x in X:
+#     output = ai.predict(x)
 
-print("")
-print("")
-print("output:")
-print(output)
-print("")
-print("")
+# print("")
+# print("")
+# print("output:")
+# print(output)
+# print("")
+# print("")
+
+# ai.printNetwork()
+
+def test():
+    print("")
+
+ai.fit(100, 0.1, X, [0,1,1,0], test)
 
 ai.printNetwork()
+
+for x in X:
+    print(ai.predict(x))
