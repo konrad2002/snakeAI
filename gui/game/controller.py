@@ -521,7 +521,7 @@ class GameController (RelativeLayout):
 
             print(row)
             _inputs = json.loads(row[0])
-            _layer = []
+            _layer = [1]
             for _input in _inputs:
                 for _value in _input:
                     _layer.append(_value)
@@ -530,13 +530,13 @@ class GameController (RelativeLayout):
             _output = row[1]
 
             if _output == 0:
-                y = [1, 1, 0, 0, 0] # bias must be 1, else it would be trained every time
+                y = [0, 1, 0, 0, 0] # bias must be 1, else it would be trained every time
             if _output == 1:
-                y = [1, 0, 1, 0, 0]
+                y = [0, 0, 1, 0, 0]
             if _output == 2:
-                y = [1, 0, 0, 1, 0]
+                y = [0, 0, 0, 1, 0]
             if _output == 3:
-                y = [1, 0, 0, 0, 1]
+                y = [0, 0, 0, 0, 1]
 
             self.directions.append(y)
 

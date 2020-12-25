@@ -41,14 +41,18 @@ class AiAnnExample (object):
                 # init weights between layer and next layer with 0
                 if layer < ( len(self.nNeurons) - 1 ):
                     self.weights.append(
-                        # 2 * self.random_state_.random_sample((neurons + 1, self.nNeurons[layer + 1] + 1)) - 1
-                        np.ones((neurons + 1, self.nNeurons[layer + 1] + 1))
+                        2 * self.random_state_.random_sample((self.nNeurons[layer + 1] + 1, neurons + 1)) - 1
+                        # np.ones((self.nNeurons[layer + 1] + 1, neurons + 1))
                         # np.zeros((neurons + 1, self.nNeurons[layer + 1] + 1))
                     )
+
+        self.layers[len(self.nNeurons) - 1][0,:] = 0
 
 
         if weights:
             self.weights = weights
+            # for weight in weights:
+            #     self.weights.append(weight)
 
     def function(self, fType, x):
 
@@ -67,7 +71,7 @@ class AiAnnExample (object):
                     y.append(0)
 
         elif fType == "sigmoid":
-            y = 1 / ( 1 + np.exp(-x) )
+            y = 1.0 / ( 1.0 + np.exp(-x) )
 
         elif fType == "relu":
             y = np.maximum(0, x)
@@ -81,11 +85,11 @@ class AiAnnExample (object):
 
     def predict(self, x):
 
-        self.layers[0][1:,2] = x
+        self.layers[0][:,2] = x
 
         for i,layer in enumerate(self.layers):
             if i > 0:
-                layer[1:,0] = np.dot(self.layers[i - 1][:,2], self.weights[i - 1][:,1:])
+                layer[1:,0] = np.dot(self.weights[i - 1][1:,:], self.layers[i - 1][:,2])
 
                 # print("")
                 # print(self.layers[i - 1][:,2])
@@ -108,7 +112,7 @@ class AiAnnExample (object):
 
     def direction(self, sensorData):
 
-        x = []
+        x = [1]
         #print("data  : " + str(sensorData))
 
         for data in sensorData:
@@ -163,8 +167,8 @@ class AiAnnExample (object):
 
             for x,y in zip(X, Y):
                 i += 1
-                # if i % round( (self.batch * iterations) / 100 ) == 0:
-                #     print(str(round( i / ( self.batch * iterations ) * 100)) + "%")
+                if i % round( (self.batch * iterations) / 100 ) == 0:
+                    print(str(round( i / ( self.batch * iterations ) * 100)) + "%")
 
                 yCalc = self.predict(x)
 
@@ -217,14 +221,14 @@ class AiAnnExample (object):
                 # print("")
 
                 self.layers[2][:,4] = np.multiply(self.layers[2][:,3], diff)
-                self.dot = np.dot(self.weights[1][:], self.layers[2][:,4])
+                self.dot = np.dot(self.weights[1][:].T, self.layers[2][:,4])
                 self.layers[1][:,4] = np.multiply(self.layers[1][:,3], self.dot)
 
                 deltaWjk = self.eta * np.outer(self.layers[2][:,4], self.layers[1][:,2].T)
                 detlaWij = self.eta * np.outer(self.layers[1][:,4], self.layers[0][:,2].T)
 
-                self.weights[0][:,:] += detlaWij.T
-                self.weights[1][:,:] += deltaWjk.T
+                self.weights[0][:,:] += detlaWij
+                self.weights[1][:,:] += deltaWjk
 
                 self.updateVis()
                 
@@ -283,10 +287,11 @@ weights.append(
 )
 
 
-ai = AiAnnExample([2, 2, 1], weights=None, activationF=["heaviside","heaviside","heaviside"], outputF=["id","id", "id"])
+ai = AiAnnExample([2, 2, 1], weights=None, activationF=["sigmoid","sigmoid"], outputF=["id","id"])
 ai.printNetwork()
 
-X = [[0, 0], [0, 1], [1, 0], [1, 1]]
+X=np.array([[1.0,1.0,1.0],[1.0,0,1.0],[1.0,1.0,0],[1.0,0,0]])
+Y=np.array([[0.0,0.0],[0.0,1.0],[0.0,1.0],[0.0,0.0]])
 # for x in X:
 #     output = ai.predict(x)
 
@@ -300,11 +305,11 @@ X = [[0, 0], [0, 1], [1, 0], [1, 1]]
 # ai.printNetwork()
 
 def test():
-    print("")
+    pass
 
-ai.fit(100, 0.1, X, [0,1,1,0], test)
+# ai.fit(100000, 0.03, X, Y, test)
 
-ai.printNetwork()
+# ai.printNetwork()
 
-for x in X:
-    print(ai.predict(x))
+# for x in X:
+#     print(str(x) + " => " + str(ai.predict(x)))
