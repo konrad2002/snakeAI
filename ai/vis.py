@@ -95,7 +95,7 @@ class AiVisualisation (Widget):
             for i,layer in enumerate(self.ann.weights):
 
                 weight = []
-                for j,pre in enumerate(layer):
+                for j,pre in enumerate(layer.T):
 
                     neuron = []
                     for k,last in enumerate(pre):
@@ -136,7 +136,7 @@ class AiVisualisation (Widget):
                 self.layers[i][j] = (round(neuron[2], 3))
 
         for i,layer in enumerate(self.ann.weights):
-            for j,pre in enumerate(layer):
+            for j,pre in enumerate(layer.T):
                 for k,last in enumerate(pre):
                     if last <= 0:
                         last = last * (-1)
