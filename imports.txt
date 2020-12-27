@@ -1,0 +1,15 @@
+used and imported modules:
+
+    need to be installed:
+        - numpy
+        - kivy
+        - pymysql
+
+    pre-installed:
+        - random
+        - time
+        - sys
+        - json
+        - socket
+        - copy
+        - math
