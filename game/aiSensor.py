@@ -42,18 +42,6 @@ class AiSensor (object):
 
             diffX = self.snake.foods[len(self.snake.body)].y - self.snake.body[0].y
             diffY = self.snake.foods[len(self.snake.body)].x - self.snake.body[0].x
-
-            # if diffX == 0:
-            #     if diffY > 0:
-            #         self.data[1][0] = diffY
-            #     elif diffY < 0:
-            #         self.data[1][2] = diffY * ( -1 )
-
-            # elif diffY == 0:
-            #     if diffX > 0:
-            #         self.data[1][1] = diffX
-            #     elif diffX < 0:
-            #         self.data[1][3] = diffX * ( -1 )
                 
             if diffX == 0:
                 if diffY > 0:

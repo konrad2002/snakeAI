@@ -43,5 +43,5 @@ class SlotMenu (GridLayout):
         self.typeBtns.append(self.type6Btn)
 
     def onSelectType(self, playerType):
-        print(str(playerType) + " was selected")
+        print(str(playerType) + " was selected for slot " + str(self.slot))
         self.parentMenu.selectPlayerType(playerType, self.slot)
