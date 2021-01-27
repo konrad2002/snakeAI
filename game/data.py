@@ -36,6 +36,8 @@ class Data (object):
 
         self.weights = []
 
+        self.isTrained = False
+
         # Evolutional Algorithm settings
         self.doEvolution = False
 

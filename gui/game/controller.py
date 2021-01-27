@@ -205,8 +205,12 @@ class GameController (RelativeLayout):
             newWeights = None
             if self.data.turn > 1 and self.evolution and self.data.doEvolution:
                 newWeights = self.evolution.newGeneration.weights[i]
-            elif self.data.turn > 1:
+
+            elif self.data.turn > 1: # if no evolution use old weights
                 newWeights = self.weights[i]
+            
+            elif self.data.turn == 1 and self.data.isTrained: # apply trained weights to first turn snakes 
+                newWeights = self.data.weights
 
             snake = Snake(self.data.startSize, self.data.foods, self.type, newWeights, self.main.gameApp.db)
 
@@ -320,7 +324,9 @@ class GameController (RelativeLayout):
 
                 # if to long without eating (to prevent infinity)
 
-                if ( snake.steps / ( len(snake.body) - self.data.startSize + 1 ) ) > 200:
+                addLength = ( len(snake.body ) - self.data.startSize + 1 )
+
+                if ( snake.steps / addLength ) > ( 75 ):
                     snake.die()
 
                 for i,tile in enumerate(snake.body):
@@ -548,3 +554,5 @@ class GameController (RelativeLayout):
 
         for snake in self.data.snakes:
             snake.ai.weights = self.data.weights
+
+        self.data.isTrained = True
